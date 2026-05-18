@@ -19,6 +19,8 @@ config/icon=""
 
 [autoload]
 
+GameState="*res://scripts/autoload/game_state.gd"
+
 [display]
 
 window/size/viewport_width=1920
@@ -31,7 +33,7 @@ window/stretch/aspect="keep"
 
 [editor_plugins]
 
-enabled=PackedStringArray()
+enabled=PackedStringArray("res://addons/gut/plugin.cfg")
 
 [input]
 

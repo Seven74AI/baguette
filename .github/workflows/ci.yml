@@ -1,0 +1,39 @@
+name: BAGUETTE CI
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    container:
+      image: barichello/godot-ci:4.2.2
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Godot headless validation
+        run: godot --headless --quit 2>&1 | tee /tmp/godot_output.txt
+      
+      - name: Check for errors
+        run: |
+          if grep -qE "ERROR:|SCRIPT ERROR:|FATAL:" /tmp/godot_output.txt; then
+            echo "Godot reported errors"
+            exit 1
+          fi
+      
+      - name: Run GUT tests
+        run: |
+          godot --headless -s addons/gut/gut_cmdln.gd -gdir=res://tests -goutput=junit_xml 2>&1 | tee /tmp/gut_output.txt
+      
+      - name: Check test results
+        run: |
+          if grep -q "Failing tests: 0" /tmp/gut_output.txt; then
+            echo "All tests passed"
+          else
+            echo "Some tests failed"
+            exit 1
+          fi

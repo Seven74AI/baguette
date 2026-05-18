@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://dweapbaguette01"]
+
+[ext_resource type="Script" path="res://scenes/weapons/baguette_gun.gd" id="1_gun_script"]
+
+[sub_resource type="BoxMesh" id="box_muzzle"]
+size = Vector3(0.05, 0.05, 0.02)
+
+[sub_resource type="StandardMaterial3D" id="mat_flash"]
+albedo_color = Color(1.0, 0.9, 0.2, 1.0)
+emission_enabled = true
+emission = Color(1.0, 0.8, 0.1, 1.0)
+emission_energy_multiplier = 4.0
+
+[node name="BaguetteGun" type="Node3D"]
+script = ExtResource("1_gun_script")
+
+[node name="RayCast3D" type="RayCast3D" parent="."]
+target_position = Vector3(0, 0, -100)
+collision_mask = 1
+
+[node name="MuzzleFlash" type="MeshInstance3D" parent="."]
+mesh = SubResource("box_muzzle")
+position = Vector3(0, 0, -0.15)
+visible = false
+surface_material_override/0 = SubResource("mat_flash")
+
+[node name="FireTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="ReloadTimer" type="Timer" parent="."]
+one_shot = true

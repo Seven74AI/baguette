@@ -1,0 +1,79 @@
+[gd_scene load_steps=2 format=3 uid="uid://dhudproto01"]
+
+[ext_resource type="Script" path="res://scenes/ui/hud.gd" id="1_hud_script"]
+
+[node name="HUD" type="Control"]
+script = ExtResource("1_hud_script")
+layout_mode = 0
+offset_right = 1280.0
+offset_bottom = 720.0
+mouse_filter = 2
+
+; ===== CROSSHAIR (center) =====
+[node name="Crosshair" type="CenterContainer" parent="."]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="CrosshairLabel" type="Label" parent="Crosshair"]
+text = "+"
+horizontal_alignment = 1
+vertical_alignment = 1
+theme_override_colors/font_color = Color(0.0, 1.0, 0.0, 0.8)
+theme_override_font_sizes/font_size = 24
+
+; ===== HEALTH BAR (bottom left) =====
+[node name="HealthBar" type="ProgressBar" parent="."]
+layout_mode = 0
+anchor_left = 0.0
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 20
+offset_top = -50
+offset_right = 280
+offset_bottom = -20
+max_value = 100.0
+value = 100.0
+percent_visible = false
+
+; ===== AMMO PANEL (bottom right) =====
+[node name="AmmoPanel" type="Panel" parent="."]
+layout_mode = 0
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -200
+offset_top = -50
+offset_right = -20
+offset_bottom = -20
+
+[node name="AmmoLabel" type="Label" parent="AmmoPanel"]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+text = "6 / 6"
+horizontal_alignment = 2
+vertical_alignment = 1
+theme_override_colors/font_color = Color(1.0, 0.9, 0.2, 1.0)
+theme_override_font_sizes/font_size = 18
+
+; ===== KILL PANEL (top right) =====
+[node name="KillPanel" type="Panel" parent="."]
+layout_mode = 0
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -200
+offset_top = 10
+offset_right = -20
+offset_bottom = 40
+
+[node name="KillLabel" type="Label" parent="KillPanel"]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+text = "Kills: 0"
+horizontal_alignment = 2
+vertical_alignment = 1
+theme_override_colors/font_color = Color(0.8, 0.8, 0.8, 1.0)
+theme_override_font_sizes/font_size = 16

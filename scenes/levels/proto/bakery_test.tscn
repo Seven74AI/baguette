@@ -1,0 +1,129 @@
+[gd_scene load_steps=4 format=3 uid="uid://dlevelbakery01"]
+
+[ext_resource type="Script" path="res://scenes/levels/proto/bakery_main.gd" id="1_main_script"]
+
+[sub_resource type="ProceduralSkyMaterial" id="sky_material"]
+sky_top_color = Color(0.1, 0.15, 0.25, 1.0)
+sky_horizon_color = Color(0.3, 0.25, 0.2, 1.0)
+ground_horizon_color = Color(0.2, 0.15, 0.1, 1.0)
+ground_bottom_color = Color(0.1, 0.08, 0.05, 1.0)
+
+[node name="BakeryTest" type="Node3D"]
+script = ExtResource("1_main_script")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("sky_material")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+position = Vector3(5, 10, 5)
+rotation = Vector3(-0.6, -0.5, 0.5)
+light_energy = 2.0
+shadow_enabled = true
+
+[node name="SpawnPoints" type="Node3D" parent="."]
+
+[node name="PlayerSpawn" type="Node3D" parent="SpawnPoints"]
+position = Vector3(0, 0, -8)
+
+[node name="EnemySpawn1" type="Node3D" parent="SpawnPoints" groups=["enemy_spawn"]]
+position = Vector3(5, 0, 0)
+
+[node name="EnemySpawn2" type="Node3D" parent="SpawnPoints" groups=["enemy_spawn"]]
+position = Vector3(-5, 0, 5)
+
+[node name="EnemySpawn3" type="Node3D" parent="SpawnPoints" groups=["enemy_spawn"]]
+position = Vector3(7, 0, 7)
+
+; ---- CSG BAKERY ROOM ----
+
+[node name="BakeryRoom" type="CSGCombiner3D" parent="."]
+use_collision = true
+
+; Floor
+[node name="Floor" type="CSGBox3D" parent="BakeryRoom"]
+size = Vector3(20, 0.3, 20)
+position = Vector3(0, -0.15, 0)
+use_collision = true
+
+; Ceiling
+[node name="Ceiling" type="CSGBox3D" parent="BakeryRoom"]
+size = Vector3(20, 0.3, 20)
+position = Vector3(0, 5.0, 0)
+use_collision = true
+
+; North wall
+[node name="WallNorth" type="CSGBox3D" parent="BakeryRoom"]
+size = Vector3(20, 5.0, 0.3)
+position = Vector3(0, 2.5, -10)
+use_collision = true
+
+; South wall
+[node name="WallSouth" type="CSGBox3D" parent="BakeryRoom"]
+size = Vector3(20, 5.0, 0.3)
+position = Vector3(0, 2.5, 10)
+use_collision = true
+
+; East wall
+[node name="WallEast" type="CSGBox3D" parent="BakeryRoom"]
+size = Vector3(0.3, 5.0, 20)
+position = Vector3(10, 2.5, 0)
+use_collision = true
+
+; West wall
+[node name="WallWest" type="CSGBox3D" parent="BakeryRoom"]
+size = Vector3(0.3, 5.0, 20)
+position = Vector3(-10, 2.5, 0)
+use_collision = true
+
+; ---- BAKERY PROPS ----
+
+; Counter (comptoir)
+[node name="Counter" type="CSGBox3D" parent="BakeryRoom"]
+size = Vector3(4.0, 1.0, 1.5)
+position = Vector3(0, 0.5, 3)
+use_collision = true
+
+; Counter top (plan de travail)
+[node name="CounterTop" type="CSGBox3D" parent="BakeryRoom"]
+size = Vector3(4.2, 0.1, 1.7)
+position = Vector3(0, 1.05, 3)
+use_collision = true
+
+; Oven body (four)
+[node name="OvenBody" type="CSGBox3D" parent="BakeryRoom"]
+size = Vector3(2.0, 2.5, 1.5)
+position = Vector3(-7, 1.25, 7)
+use_collision = true
+
+; Oven door (porte du four)
+[node name="OvenDoor" type="CSGBox3D" parent="BakeryRoom"]
+size = Vector3(1.5, 1.2, 0.1)
+position = Vector3(-7, 1.4, 7.8)
+use_collision = true
+
+; Shelf (étagère)
+[node name="Shelf" type="CSGBox3D" parent="BakeryRoom"]
+size = Vector3(3.0, 0.1, 1.0)
+position = Vector3(6, 2.0, 7)
+use_collision = true
+
+; Flour sack (sac de farine - cylinder)
+[node name="FlourSack" type="CSGCylinder3D" parent="BakeryRoom"]
+radius = 0.5
+height = 0.8
+position = Vector3(3, 0.4, -2)
+use_collision = true
+
+; Oven light (point light near oven for atmosphere)
+[node name="OvenLight" type="OmniLight3D" parent="."]
+position = Vector3(-7, 2.0, 7)
+light_color = Color(1.0, 0.6, 0.2, 1.0)
+light_energy = 3.0
+omni_range = 8.0
+
+; Ambient point light for atmosphere
+[node name="AmbientLight" type="OmniLight3D" parent="."]
+position = Vector3(0, 4.0, 0)
+light_color = Color(1.0, 0.9, 0.7, 1.0)
+light_energy = 0.5
+omni_range = 15.0

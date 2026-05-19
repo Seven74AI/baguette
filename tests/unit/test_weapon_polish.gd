@@ -26,3 +26,27 @@ func test_weapon_can_fire_with_recoil() -> void:
 	await wait_frames(5)
 	var after_ammo: int = _weapon.get_ammo_count()
 	assert_lt(after_ammo, initial_ammo, "Firing should consume ammo")
+
+
+func test_weapon_fire_triggers_sound_manager() -> void:
+	# Verify SoundManager exists and fire() doesn't crash with SFX integration
+	assert_not_null(SoundManager, "SoundManager autoload should exist for weapon SFX")
+	var initial_ammo: int = _weapon.get_ammo_count()
+	_weapon.fire()
+	await wait_frames(5)
+	var after_ammo: int = _weapon.get_ammo_count()
+	assert_lt(after_ammo, initial_ammo, "Firing should consume ammo even with SFX")
+
+
+func test_weapon_reload_triggers_sound_manager() -> void:
+	# Deplete ammo first
+	_weapon.fire()
+	await wait_frames(5)
+	assert_lt(_weapon.get_ammo_count(), _weapon.get_max_ammo(), "Ammo should be depleted before reload")
+	
+	# Reload should trigger SoundManager.play_reload_sound()
+	# Reload is async (1.5s timer) — wait long enough for it to complete
+	_weapon.reload()
+	await get_tree().create_timer(2.0).timeout  # reload_time is 1.5s, give margin
+	assert_eq(_weapon.get_ammo_count(), _weapon.get_max_ammo(), "Ammo should be full after reload")
+	assert_false(_weapon.is_reloading(), "Should not be reloading after reload completes")

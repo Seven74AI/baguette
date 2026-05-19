@@ -40,8 +40,9 @@ func _play_tone(frequency: float, duration: float, volume: float, waveform: Stri
 	if not player:
 		return
 	
-	var stream: AudioStream = player.stream
-	var playback = stream.get_playback()  # AudioStreamGeneratorPlayback
+	player.play()  # Must play before getting playback to start the stream
+	
+	var playback = player.get_stream_playback()  # AudioStreamGeneratorPlayback
 	if not playback:
 		return
 	
@@ -54,8 +55,6 @@ func _play_tone(frequency: float, duration: float, volume: float, waveform: Stri
 		var amp: float = sample * volume * env * MASTER_VOLUME
 		playback.push_frame(Vector2(amp, amp))
 		i += 1
-	
-	player.play()
 
 
 func _play_sweep(start_freq: float, end_freq: float, duration: float, volume: float) -> void:
@@ -63,8 +62,9 @@ func _play_sweep(start_freq: float, end_freq: float, duration: float, volume: fl
 	if not player:
 		return
 	
-	var stream: AudioStream = player.stream
-	var playback = stream.get_playback()
+	player.play()  # Must play before getting playback to start the stream
+	
+	var playback = player.get_stream_playback()
 	if not playback:
 		return
 	
@@ -78,8 +78,6 @@ func _play_sweep(start_freq: float, end_freq: float, duration: float, volume: fl
 		var amp: float = sample * volume * env * MASTER_VOLUME
 		playback.push_frame(Vector2(amp, amp))
 		i += 1
-	
-	player.play()
 
 
 func _generate_sample(t: float, frequency: float, waveform: String) -> float:

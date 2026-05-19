@@ -58,7 +58,7 @@ func spawn_muzzle_flash_core(at_position: Vector3) -> void:
 func spawn_muzzle_particles(at_position: Vector3, direction: Vector3) -> void:
 	var particles: GPUParticles3D = _create_particles(
 		25, MUZZLE_LIFETIME, Color(1.0, 0.8, 0.1, 1.0),
-		3.0, 8.0, 15.0, 3.0, 0.15, 0.35
+		3.0, 8.0, 15.0, 3.0, 0.15, 0.35, -1.0, 0.2
 	)
 	_apply_muzzle_flash_gradient(particles)
 	_add_to_world(particles, at_position, direction, MUZZLE_LIFETIME)

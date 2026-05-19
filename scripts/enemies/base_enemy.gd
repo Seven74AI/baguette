@@ -7,11 +7,17 @@ const HealthComponent = preload("res://scripts/components/health_component.gd")
 
 enum EnemyState { IDLE, CHASE, ATTACK, DEAD }
 
+const LootTable = preload("res://scripts/loot/loot_table.gd")
+const Pickup = preload("res://scripts/loot/pickup.gd")
+
 ## Emitted when the enemy takes damage.
 signal damaged(amount: int, source: Node)
 
 ## Emitted when the enemy dies (health reaches 0).
 signal died
+
+## Emitted when loot is spawned (passes the Pickup node).
+signal loot_spawned(pickup: Node)
 
 @export_category("Movement")
 @export var move_speed: float = 3.0
@@ -27,8 +33,9 @@ signal died
 @export var health_component: HealthComponent
 
 @export_category("Loot")
-## Dictionary mapping item resource paths to drop probability (0.0-1.0).
-## e.g. { "res://resources/loot/baguette_crumb.tres": 1.0 }
+## LootTable resource reference for per-enemy drop configuration.
+@export var drop_table_ref: Resource
+## [DEPRECATED] Legacy dictionary drop table. Use drop_table_ref instead.
 @export var drop_table: Dictionary = {}
 
 var current_state: EnemyState = EnemyState.IDLE
@@ -77,12 +84,56 @@ func _on_death() -> void:
 	current_state = EnemyState.DEAD
 	died.emit()
 
+	# Drop loot
+	_drop_loot()
+
 	# Disable collision
 	if has_node("CollisionShape3D"):
 		$CollisionShape3D.disabled = true
 
 	set_process(false)
 	set_physics_process(false)
+
+
+## Spawn loot based on the enemy's drop table. Emits loot_spawned for each pickup.
+func _drop_loot() -> void:
+	if not drop_table_ref:
+		return
+
+	var rolled: String = (drop_table_ref as LootTable).roll()
+	if rolled == "":
+		return
+
+	var defn := LootTable.get_item_definition(rolled)
+	if defn.is_empty():
+		return
+
+	var pickup := _create_pickup(defn, rolled)
+	if pickup:
+		var scatter := Vector3(
+			randf_range(-1.5, 1.5),
+			0.0,
+			randf_range(-1.5, 1.5)
+		)
+		pickup.global_position = global_position + scatter
+		# Add to parent or self (testing fallback)
+		var parent_node: Node = get_parent()
+		if not parent_node:
+			parent_node = self
+		parent_node.add_child(pickup)
+		loot_spawned.emit(pickup)
+
+
+## Factory method to create a Pickup from an item definition.
+func _create_pickup(defn: Dictionary, _item_name: String) -> Node:
+	var pk: Pickup = Pickup.new()
+	pk.loot_type = defn.type as int
+	pk.pickup_value = defn.value
+	if defn.has("duration"):
+		pk.buff_duration = defn.duration
+	if defn.type == LootTable.LootType.SPEED_BUFF:
+		pk.buff_id = "speed"
+	return pk
 
 
 ## Find and cache the player reference.

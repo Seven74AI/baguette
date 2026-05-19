@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="LootTable" load_steps=2 format=3 uid="uid://cloottables001"]
+
+[ext_resource type="Script" path="res://scripts/loot/loot_table.gd" id="1_table"]
+
+[resource]
+script = ExtResource("1_table")
+drop_table = {
+"ammo": 0.7,
+"health": 0.3
+}

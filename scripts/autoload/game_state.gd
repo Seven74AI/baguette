@@ -30,6 +30,9 @@ var rooms_cleared: int = 0
 var run_time: float = 0.0
 var total_damage_dealt: int = 0
 
+## Phase 4.11: Weapons used tracking — list of weapon names used during the run.
+var weapons_used: Array = []
+
 ## Weapon registry — maps weapon_id (String) to weapon data (Dictionary).
 var weapon_registry: Dictionary = {}
 
@@ -54,6 +57,7 @@ func start_run() -> void:
 	rooms_cleared = 0
 	run_time = 0.0
 	total_damage_dealt = 0
+	weapons_used.clear()
 	_ammo_count = 0
 	_active_buffs.clear()
 	_upgrade_tokens = 0
@@ -210,8 +214,18 @@ func _reset_for_testing() -> void:
 	rooms_cleared = 0
 	run_time = 0.0
 	total_damage_dealt = 0
+	weapons_used.clear()
 	_ammo_count = 0
 	_max_ammo = 30
 	_active_buffs.clear()
 	_upgrade_tokens = 0
 	run_active = false
+
+## Record a weapon as used during the run (deduplicated, order-preserving).
+func record_weapon_used(weapon_name: String) -> void:
+	if weapon_name not in weapons_used:
+		weapons_used.append(weapon_name)
+
+## Get the list of weapons used during the current run.
+func get_weapons_used() -> Array:
+	return weapons_used

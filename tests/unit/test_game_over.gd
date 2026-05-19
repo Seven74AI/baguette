@@ -51,7 +51,7 @@ func test_game_over_displays_run_time() -> void:
 func test_game_over_has_restart_button() -> void:
 	var restart_btn: Button = _game_over.get_node_or_null("CenterContainer/ContentVBox/ButtonsContainer/RestartButton")
 	assert_not_null(restart_btn, "Game Over should have a RestartButton")
-	assert_true(restart_btn.text.to_upper().contains("RECOMMENCER") or restart_btn.text.to_upper().contains("RESTART") or restart_btn.text.to_upper().contains("NEW"), "Restart button should say RECOMMENCER or similar")
+	assert_true(restart_btn.text.to_upper().contains("RECOMMENCER") or restart_btn.text.to_upper().contains("RESTART") or restart_btn.text.to_upper().contains("NOUVELLE") or restart_btn.text.to_upper().contains("NEW"), "Restart button should say RECOMMENCER or similar")
 
 
 func test_game_over_has_menu_button() -> void:

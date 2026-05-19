@@ -88,3 +88,34 @@ func test_invulnerability_prevents_damage() -> void:
 	var health_after_first := _health.current_health
 	_health.take_damage(50)  # Should be blocked
 	assert_eq(_health.current_health, health_after_first, "Invulnerable entities should not take damage")
+
+
+func test_take_damage_accepts_optional_damage_type() -> void:
+	# Backward compat: take_damage should work without damage_type param
+	_health.take_damage(10)
+	assert_eq(_health.current_health, 90, "take_damage without damage_type should still work")
+
+
+func test_take_damage_with_type_works() -> void:
+	var dt = preload("res://scripts/components/damage_types.gd")
+	_health.take_damage(10, null, dt.SLASH)
+	assert_eq(_health.current_health, 90, "take_damage with damage_type should apply damage")
+
+
+func test_take_damage_with_weakness_applies_multiplier() -> void:
+	var dt = preload("res://scripts/components/damage_types.gd")
+	var WeaknessComp = preload("res://scripts/components/weakness_component.gd")
+	
+	_health.weakness_component = WeaknessComp.new()
+	_health.weakness_component.set_weakness(dt.SLASH, 2.0)
+	
+	# 25 SLASH damage with 2x weakness → 50 damage
+	_health.take_damage(25, null, dt.SLASH)
+	assert_eq(_health.current_health, 50, "Weakness should double SLASH damage")
+
+
+func test_no_weakness_component_still_works() -> void:
+	# No weakness component attached — damage_type is ignored, full damage applied
+	var dt = preload("res://scripts/components/damage_types.gd")
+	_health.take_damage(40, null, dt.FIRE)
+	assert_eq(_health.current_health, 60, "Without WeaknessComponent, damage should apply normally")

@@ -114,3 +114,14 @@ func test_reload_does_nothing_when_full() -> void:
 
 func test_damage_is_correct() -> void:
 	assert_eq(_gun.damage, 25, "Baguette Gun should deal 25 damage")
+
+
+func test_gun_has_damage_type_export() -> void:
+	# BaguetteGun should have a damage_type property (default: NONE = 0)
+	assert_eq(_gun.damage_type, 0, "Default damage_type should be NONE (0)")
+
+
+func test_gun_damage_type_is_settable() -> void:
+	var dt = preload("res://scripts/components/damage_types.gd")
+	_gun.damage_type = dt.SLASH
+	assert_eq(_gun.damage_type, dt.SLASH, "Should set damage_type to SLASH")

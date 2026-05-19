@@ -21,6 +21,11 @@ signal damage_taken(amount: int, source: Node)
 @export var is_invulnerable: bool = false
 @export var invulnerability_duration: float = 0.5
 
+@export_category("Damage Types")
+## Optional WeaknessComponent for type-based damage modifications.
+## If assigned, take_damage() will apply weakness/resistance multipliers.
+@export var weakness_component: Node = null
+
 var _invulnerability_timer: float = 0.0
 
 
@@ -35,12 +40,18 @@ func _process(delta: float) -> void:
 			is_invulnerable = false
 
 
-func take_damage(amount: int, source: Node = null) -> void:
+func take_damage(amount: int, source: Node = null, damage_type: int = 0) -> void:
 	if is_invulnerable or current_health <= 0:
 		return
 
-	current_health -= amount
-	damage_taken.emit(amount, source)
+	# Apply weakness/resistance if a WeaknessComponent is attached
+	var effective_amount := amount
+	if weakness_component and damage_type != 0:
+		if weakness_component.has_method("calculate_damage"):
+			effective_amount = weakness_component.calculate_damage(amount, damage_type)
+
+	current_health -= effective_amount
+	damage_taken.emit(effective_amount, source)
 
 	if amount > 0 and invulnerability_duration > 0:
 		is_invulnerable = true

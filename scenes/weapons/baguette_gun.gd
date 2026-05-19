@@ -9,6 +9,7 @@ signal ammo_depleted
 
 @export_category("Weapon Stats")
 @export var damage: int = 25
+@export var damage_type: int = 0   ## DamageTypes.NONE by default; set to SLASH/BLUNT/FIRE/OVEN
 @export var max_ammo: int = 6
 @export var fire_rate: float = 0.5   ## seconds between shots
 @export var reload_time: float = 1.5  ## seconds to reload
@@ -89,9 +90,9 @@ func reload() -> void:
 
 func _apply_damage(target: Node, _hit_point: Vector3) -> void:
 	if target.has_method("take_damage"):
-		target.take_damage(damage, get_parent())
+		target.take_damage(damage, get_parent(), damage_type)
 	elif target.get_parent() and target.get_parent().has_method("take_damage"):
-		target.get_parent().take_damage(damage, get_parent())
+		target.get_parent().take_damage(damage, get_parent(), damage_type)
 
 
 func get_ammo_count() -> int:

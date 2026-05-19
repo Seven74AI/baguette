@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://dflour01"]
+
+[sub_resource type="StandardMaterial3D" id="mat_cream"]
+albedo_color = Color(0.95, 0.90, 0.75, 1.0)
+roughness = 0.9
+
+[sub_resource type="CylinderMesh" id="sack_body"]
+top_radius = 0.35
+bottom_radius = 0.45
+height = 0.7
+
+[sub_resource type="SphereMesh" id="knot_mesh"]
+radius = 0.12
+height = 0.16
+
+[node name="FlourSack" type="Node3D"]
+
+[node name="SackBody" type="MeshInstance3D" parent="."]
+mesh = SubResource("sack_body")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.35, 0)
+surface_material_override/0 = SubResource("mat_cream")
+
+[node name="Knot" type="MeshInstance3D" parent="."]
+mesh = SubResource("knot_mesh")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
+surface_material_override/0 = SubResource("mat_cream")

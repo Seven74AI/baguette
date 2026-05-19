@@ -14,6 +14,16 @@ extends Node
 const DungeonRoom = preload("res://scripts/procedural/room.gd")
 const DungeonCorridor = preload("res://scripts/procedural/corridor.gd")
 
+# ── Prop scene preloads ──────────────────────────────────────────
+const BakeryRackScene = preload("res://scenes/props/bakery_rack.tscn")
+const OvenPropScene = preload("res://scenes/props/oven_prop.tscn")
+const CounterDisplayScene = preload("res://scenes/props/counter_display.tscn")
+const FlourSackScene = preload("res://scenes/props/flour_sack.tscn")
+const CroissantCrateScene = preload("res://scenes/props/croissant_crate.tscn")
+const StreetLampScene = preload("res://scenes/props/street_lamp.tscn")
+const BenchPropScene = preload("res://scenes/props/bench_prop.tscn")
+const AbandonedCarScene = preload("res://scenes/props/abandoned_car.tscn")
+
 const THEMES: Array = ["cuisine", "boulangerie", "rue"]
 const MAX_PLACEMENT_ATTEMPTS: int = 100
 
@@ -215,28 +225,23 @@ func _spawn_boulangerie_props(room) -> void:
 	var cx: float = room.position.x + room.size.x * 0.5
 	var cz: float = room.position.y + room.size.y * 0.5
 
-	# 1. Wooden shelf (tall box)
-	_spawn_csg_box(props_root, "Shelf", Vector3(cx - 2, 1.5, cz), Vector3(3, 3, 0.5), Color(0.55, 0.35, 0.15))
+	# 1. Bakery rack with baguettes
+	_spawn_prop_instance(BakeryRackScene, props_root, "BakeryRack", Vector3(cx - 1.5, 0, cz))
 
-	# 2. Display case (glass-like box)
-	_spawn_csg_box(props_root, "DisplayCase", Vector3(cx + 2, 0.5, cz - 1), Vector3(1.5, 1, 1.5), Color(0.7, 0.8, 0.9))
+	# 2. Oven with glow
+	_spawn_prop_instance(OvenPropScene, props_root, "Oven", Vector3(cx + 1.5, 0, cz - 1))
 
-	# 3. Flour sack (squat cylinder)
-	var sack := CSGCylinder3D.new()
-	sack.name = "FlourSack"
-	sack.height = 0.8
-	sack.radius = 0.4
-	sack.position = Vector3(cx, 0.4, cz + 1.5)
-	_set_material_color(sack, Color(0.9, 0.85, 0.75))
-	props_root.add_child(sack)
-	sack.owner = self
+	# 3. Counter display case
+	_spawn_prop_instance(CounterDisplayScene, props_root, "CounterDisplay", Vector3(cx + 1.5, 0, cz + 1))
 
-	# 4. Dough trough (open box)
-	_spawn_csg_box(props_root, "DoughTrough", Vector3(cx + 1, 0.4, cz + 1.5), Vector3(1.5, 0.6, 1), Color(0.5, 0.3, 0.15))
+	# 4. Flour sack
+	_spawn_prop_instance(FlourSackScene, props_root, "FlourSack", Vector3(cx - 0.8, 0, cz + 1.5))
 
-	# 5. Bread rack (multiple small shelves)
-	for i in range(3):
-		_spawn_csg_box(props_root, "BreadRack", Vector3(cx - 1 + i * 1.2, 0.3 + i * 0.6, cz - 2), Vector3(1, 0.1, 0.4), Color(0.6, 0.4, 0.2))
+	# 5. Flour sack #2
+	_spawn_prop_instance(FlourSackScene, props_root, "FlourSack2", Vector3(cx - 1.8, 0, cz + 1.8))
+
+	# 6. Croissant crate
+	_spawn_prop_instance(CroissantCrateScene, props_root, "CroissantCrate", Vector3(cx + 2.5, 0, cz + 2))
 
 
 func _spawn_rue_props(room) -> void:
@@ -248,49 +253,35 @@ func _spawn_rue_props(room) -> void:
 	var cx: float = room.position.x + room.size.x * 0.5
 	var cz: float = room.position.y + room.size.y * 0.5
 
-	# 1. Cobblestone floor (large flat box — decorative base)
-	_spawn_csg_box(props_root, "CobblestoneFloor", Vector3(cx, 0.02, cz), Vector3(room.size.x * 0.9, 0.05, room.size.y * 0.9), Color(0.35, 0.35, 0.35))
+	# 1. Street lamp
+	_spawn_prop_instance(StreetLampScene, props_root, "StreetLamp", Vector3(cx - 2, 0, cz - 2))
 
-	# 2. Street lamp (thin cylinder + sphere light)
-	var lamp_pole := CSGCylinder3D.new()
-	lamp_pole.name = "LampPole"
-	lamp_pole.height = 3.0
-	lamp_pole.radius = 0.08
-	lamp_pole.position = Vector3(cx - 2, 1.5, cz - 2)
-	_set_material_color(lamp_pole, Color(0.2, 0.2, 0.25))
-	props_root.add_child(lamp_pole)
-	lamp_pole.owner = self
+	# 2. Street lamp #2
+	_spawn_prop_instance(StreetLampScene, props_root, "StreetLamp2", Vector3(cx + 2, 0, cz - 2))
 
-	var lamp_light := CSGSphere3D.new()
-	lamp_light.name = "LampLight"
-	lamp_light.radius = 0.3
-	lamp_light.position = Vector3(cx - 2, 3.1, cz - 2)
-	_set_material_color(lamp_light, Color(1.0, 0.9, 0.4))
-	props_root.add_child(lamp_light)
-	lamp_light.owner = self
+	# 3. Bench
+	_spawn_prop_instance(BenchPropScene, props_root, "Bench", Vector3(cx + 2, 0, cz + 1))
 
-	# 3. Bench (flat box on small legs)
-	_spawn_csg_box(props_root, "Bench", Vector3(cx + 2, 0.4, cz + 1), Vector3(2, 0.15, 0.6), Color(0.45, 0.3, 0.2))
-	# Bench legs
-	for lx in [-0.8, 0.8]:
-		for lz in [-0.2, 0.2]:
-			_spawn_csg_box(props_root, "BenchLeg", Vector3(cx + 2 + lx, 0.2, cz + 1 + lz), Vector3(0.1, 0.4, 0.1), Color(0.35, 0.2, 0.1))
+	# 4. Abandoned car
+	var car_inst := AbandonedCarScene.instantiate()
+	car_inst.name = "AbandonedCar"
+	car_inst.position = Vector3(cx + 2, 0, cz + 3)
+	car_inst.rotation_degrees = Vector3(0, _rng.randf_range(0, 360), 0)
+	props_root.add_child(car_inst)
+	car_inst.owner = self
 
-	# 4. Newspaper stand (tall narrow box)
-	_spawn_csg_box(props_root, "NewspaperStand", Vector3(cx - 1.5, 0.8, cz + 2), Vector3(0.8, 1.6, 0.3), Color(0.5, 0.45, 0.4))
-
-	# 5. Manhole cover (flat cylinder on floor)
-	var manhole := CSGCylinder3D.new()
-	manhole.name = "ManholeCover"
-	manhole.height = 0.03
-	manhole.radius = 0.5
-	manhole.position = Vector3(cx + 1, 0.02, cz - 1.5)
-	_set_material_color(manhole, Color(0.25, 0.25, 0.28))
-	props_root.add_child(manhole)
-	manhole.owner = self
+	# 5. Bench #2
+	_spawn_prop_instance(BenchPropScene, props_root, "Bench2", Vector3(cx - 3, 0, cz + 2))
 
 
-# ── CSG Helpers ───────────────────────────────────────────────────
+# ── CSG Helpers (kept for cuisine props) ──────────────────────────
+
+func _spawn_prop_instance(scene: PackedScene, parent: Node3D, name: String, pos: Vector3) -> void:
+	var inst := scene.instantiate()
+	inst.name = name
+	inst.position = pos
+	parent.add_child(inst)
+	inst.owner = self
 
 func _spawn_csg_box(parent: Node3D, name: String, pos: Vector3, size: Vector3, col: Color, use_rng_offset: bool = false) -> void:
 	var box := CSGBox3D.new()

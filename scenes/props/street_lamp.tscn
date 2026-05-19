@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://dlamp01"]
+
+[sub_resource type="StandardMaterial3D" id="mat_pole"]
+albedo_color = Color(0.50, 0.30, 0.10, 1.0)
+metallic = 0.6
+roughness = 0.5
+
+[sub_resource type="StandardMaterial3D" id="mat_light"]
+albedo_color = Color(0.80, 0.60, 0.10, 1.0)
+emission_enabled = true
+emission = Color(0.95, 0.80, 0.20, 1.0)
+emission_energy_multiplier = 3.0
+
+[sub_resource type="CylinderMesh" id="pole_mesh"]
+top_radius = 0.06
+bottom_radius = 0.08
+height = 3.5
+
+[sub_resource type="SphereMesh" id="light_mesh"]
+radius = 0.3
+height = 0.5
+
+[node name="StreetLamp" type="Node3D"]
+
+[node name="Pole" type="MeshInstance3D" parent="."]
+mesh = SubResource("pole_mesh")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75, 0)
+surface_material_override/0 = SubResource("mat_pole")
+
+[node name="Light" type="MeshInstance3D" parent="."]
+mesh = SubResource("light_mesh")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.6, 0)
+surface_material_override/0 = SubResource("mat_light")

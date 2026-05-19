@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3 uid="uid://dcounter01"]
+
+[sub_resource type="StandardMaterial3D" id="mat_wood"]
+albedo_color = Color(0.55, 0.35, 0.15, 1.0)
+roughness = 0.75
+
+[sub_resource type="StandardMaterial3D" id="mat_glass"]
+albedo_color = Color(0.95, 0.90, 0.75, 0.6)
+roughness = 0.2
+
+[sub_resource type="BoxMesh" id="counter_top"]
+size = Vector3(3.0, 0.15, 1.2)
+
+[sub_resource type="BoxMesh" id="glass_panel"]
+size = Vector3(2.5, 0.4, 0.06)
+
+[node name="CounterDisplay" type="Node3D"]
+
+[node name="CounterTop" type="MeshInstance3D" parent="."]
+mesh = SubResource("counter_top")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+surface_material_override/0 = SubResource("mat_wood")
+
+[node name="GlassPanel" type="MeshInstance3D" parent="."]
+mesh = SubResource("glass_panel")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.15, 0.55)
+surface_material_override/0 = SubResource("mat_glass")

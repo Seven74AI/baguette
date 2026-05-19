@@ -1,0 +1,42 @@
+[gd_scene load_steps=5 format=3 uid="uid://dbench01"]
+
+[sub_resource type="StandardMaterial3D" id="mat_seat"]
+albedo_color = Color(0.55, 0.35, 0.15, 1.0)
+roughness = 0.75
+
+[sub_resource type="StandardMaterial3D" id="mat_leg"]
+albedo_color = Color(0.50, 0.30, 0.10, 1.0)
+roughness = 0.7
+
+[sub_resource type="BoxMesh" id="seat_mesh"]
+size = Vector3(2.2, 0.12, 0.55)
+
+[sub_resource type="BoxMesh" id="leg_mesh"]
+size = Vector3(0.08, 0.45, 0.08)
+
+[node name="Bench" type="Node3D"]
+
+[node name="Seat" type="MeshInstance3D" parent="."]
+mesh = SubResource("seat_mesh")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.45, 0)
+surface_material_override/0 = SubResource("mat_seat")
+
+[node name="LegFL" type="MeshInstance3D" parent="."]
+mesh = SubResource("leg_mesh")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.9, 0.22, 0.2)
+surface_material_override/0 = SubResource("mat_leg")
+
+[node name="LegFR" type="MeshInstance3D" parent="."]
+mesh = SubResource("leg_mesh")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.9, 0.22, 0.2)
+surface_material_override/0 = SubResource("mat_leg")
+
+[node name="LegBL" type="MeshInstance3D" parent="."]
+mesh = SubResource("leg_mesh")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.9, 0.22, -0.2)
+surface_material_override/0 = SubResource("mat_leg")
+
+[node name="LegBR" type="MeshInstance3D" parent="."]
+mesh = SubResource("leg_mesh")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.9, 0.22, -0.2)
+surface_material_override/0 = SubResource("mat_leg")

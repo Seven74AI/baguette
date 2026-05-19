@@ -1,0 +1,39 @@
+[gd_scene load_steps=5 format=3 uid="uid://dcroissant01"]
+
+[sub_resource type="StandardMaterial3D" id="mat_wood"]
+albedo_color = Color(0.50, 0.30, 0.10, 1.0)
+roughness = 0.8
+
+[sub_resource type="StandardMaterial3D" id="mat_crust"]
+albedo_color = Color(0.82, 0.68, 0.45, 1.0)
+roughness = 0.6
+
+[sub_resource type="BoxMesh" id="crate_mesh"]
+size = Vector3(1.0, 0.6, 0.8)
+
+[sub_resource type="CylinderMesh" id="croissant_mesh"]
+top_radius = 0.04
+bottom_radius = 0.04
+height = 0.5
+
+[node name="CroissantCrate" type="Node3D"]
+
+[node name="Crate" type="MeshInstance3D" parent="."]
+mesh = SubResource("crate_mesh")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+surface_material_override/0 = SubResource("mat_wood")
+
+[node name="Croissant1" type="MeshInstance3D" parent="."]
+mesh = SubResource("croissant_mesh")
+transform = Transform3D(1, 0, 0, 0, 0, 0.6, 0, -0.6, 0, -0.2, 0.65, 0.1)
+surface_material_override/0 = SubResource("mat_crust")
+
+[node name="Croissant2" type="MeshInstance3D" parent="."]
+mesh = SubResource("croissant_mesh")
+transform = Transform3D(1, 0, 0, 0, 0, 0.6, 0, -0.6, 0, 0.2, 0.65, -0.1)
+surface_material_override/0 = SubResource("mat_crust")
+
+[node name="Croissant3" type="MeshInstance3D" parent="."]
+mesh = SubResource("croissant_mesh")
+transform = Transform3D(1, 0, 0, 0, 0, 0.6, 0, -0.6, 0, 0.1, 0.65, 0.3)
+surface_material_override/0 = SubResource("mat_crust")

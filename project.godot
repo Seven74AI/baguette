@@ -20,6 +20,7 @@ config/icon=""
 [autoload]
 
 GameState="*res://scripts/autoload/game_state.gd"
+GutBootstrap="*res://scripts/autoload/gut_bootstrap.gd"
 
 [display]
 

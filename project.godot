@@ -99,6 +99,12 @@ textures/canvas_textures/default_texture_repeat=false
 environment/defaults/default_clear_color=Color(0, 0, 0, 1)
 anti_aliasing/quality/msaa_2d=1
 anti_aliasing/quality/msaa_3d=2
+environment/glow/upscale_mode=1
+environment/glow/upscale_mode.mobile=0
+environment/glow/intensity=0.6
+environment/ssao/enabled=true
+environment/ssil/enabled=false
+environment/sdfgi/enabled=false
 
 [physics]
 

@@ -12,6 +12,7 @@ var _crossfade_duration: float = 1.0
 var _combat_cooldown_timer: float = 0.0
 var _combat_cooldown: float = 3.0
 var _detection_radius: float = 15.0
+var _crossfade_tween: Tween = null
 
 
 func _ready() -> void:
@@ -104,13 +105,10 @@ func _load_music_streams() -> void:
 func _load_ogg(path: String) -> AudioStream:
 	if ResourceLoader.exists(path):
 		return load(path)
-	# Generate silent placeholder when real files not available
 	return _generate_silent_stream(5.0)
 
 
 func _generate_silent_stream(_duration: float) -> AudioStream:
-	# Return null to gracefully fall back when .ogg files are missing.
-	# Real .ogg files should be placed in assets/audio/music/.
 	return null
 
 
@@ -133,9 +131,54 @@ func stop_music() -> void:
 		_combat_player.stop()
 
 
-func crossfade_to(_target_stream: AudioStream, _duration: float = 1.0) -> void:
-	# Minimal implementation — detailed crossfade will be refined in Task 8
-	pass
+## Test helper: returns true if an active crossfade tween exists.
+func has_active_crossfade_tween() -> bool:
+	return _crossfade_tween != null and is_instance_valid(_crossfade_tween) and _crossfade_tween.is_running()
+
+
+func crossfade_to(target_stream: AudioStream, duration: float = 1.0) -> void:
+	# Kill any existing crossfade tween
+	if _crossfade_tween and is_instance_valid(_crossfade_tween):
+		_crossfade_tween.kill()
+		_crossfade_tween = null
+
+	if target_stream == null:
+		return
+
+	# Clamp duration to a safe minimum
+	var safe_duration: float = maxf(duration, 0.01)
+
+	# Pick the player that is NOT currently active for the target stream
+	var target_player: AudioStreamPlayer
+	var fade_out_player: AudioStreamPlayer
+
+	if is_in_combat:
+		target_player = _explore_player
+		fade_out_player = _combat_player
+	else:
+		target_player = _combat_player
+		fade_out_player = _explore_player
+
+	if not target_player:
+		return
+
+	# Set the target stream on the chosen player
+	target_player.stream = target_stream
+	target_player.play()
+
+	# Create tween for volume crossfade animation
+	_crossfade_tween = create_tween()
+	_crossfade_tween.set_parallel(true)
+
+	# Fade in the target player from silent to full
+	target_player.volume_db = linear_to_db(0.01)
+	_crossfade_tween.tween_property(target_player, "volume_db", linear_to_db(1.0), safe_duration) \
+		.from_current()
+
+	# Fade out the other player if it is playing
+	if fade_out_player and fade_out_player.playing:
+		_crossfade_tween.tween_property(fade_out_player, "volume_db", linear_to_db(0.0), safe_duration) \
+			.from_current()
 
 
 func set_music_volume(volume: float) -> void:

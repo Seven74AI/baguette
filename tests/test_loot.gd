@@ -62,18 +62,21 @@ func test_loot_table_get_known_item_names() -> void:
 
 func test_pickup_has_loot_type() -> void:
 	var pk: Node = PickupScript.new()
+	add_child_autofree(pk)
 	pk.loot_type = 0  # PickupType.HEALTH
 	assert_eq(pk.loot_type, 0)
 
 
 func test_pickup_has_value() -> void:
 	var pk: Node = PickupScript.new()
-	pk.pickup_value = 25
-	assert_eq(pk.pickup_value, 25)
+	add_child_autofree(pk)
+	pk.pickup_value = 25.0
+	assert_eq(pk.pickup_value, 25.0)
 
 
 func test_pickup_has_duration() -> void:
 	var pk: Node = PickupScript.new()
+	add_child_autofree(pk)
 	pk.buff_duration = 10.0
 	assert_eq(pk.buff_duration, 10.0)
 
@@ -120,7 +123,7 @@ func test_loot_manager_spawn_loot() -> void:
 	var pickup: Node = mgr.spawn_pickup("health", pos)
 	assert_not_null(pickup, "spawn_pickup should return a Pickup node")
 	assert_eq(pickup.loot_type, 0, "Health pickup should have HEALTH type (0)")
-	assert_eq(pickup.pickup_value, 25, "Health should restore 25 HP")
+	assert_eq(pickup.pickup_value, 25.0, "Health should restore 25 HP")
 	# Should be a child of the tree
 	assert_true(pickup.is_inside_tree(), "Pickup should be in scene tree")
 
@@ -216,7 +219,7 @@ func test_enemy_drop_loot_on_death() -> void:
 
 	watch_signals(enemy)
 	var spawn_count: Array = [0]
-	enemy.loot_spawned.connect(func(_pk): spawn_count[0] += 1)
+	enemy.loot_spawned.connect(func(pk): spawn_count[0] += 1; add_child_autofree(pk))
 
 	enemy.take_damage(100)
 	assert_signal_emitted(enemy, "died")

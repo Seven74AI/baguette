@@ -31,6 +31,10 @@ func play_dash_sound() -> void:
 	_play_sweep(200.0, 600.0, 0.15, 0.3)
 
 
+func play_pickup_sound() -> void:
+	_play_tone(660.0, 0.1, 0.25, "square")
+
+
 func play_ui_click() -> void:
 	_play_tone(880.0, 0.03, 0.15, "square")
 

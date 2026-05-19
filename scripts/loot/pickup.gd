@@ -61,5 +61,9 @@ func collect() -> void:
 		PickupType.WEAPON_UPGRADE:
 			GameState.add_upgrade_token(int(pickup_value))
 
+	# Sound + particle burst
+	SoundManager.play_pickup_sound()
+	EffectsManager.spawn_pickup_burst(global_position)
+
 	collected.emit(self)
 	queue_free()

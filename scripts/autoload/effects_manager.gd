@@ -18,6 +18,11 @@ func spawn_impact_flour(at_position: Vector3, normal: Vector3) -> void:
 	_add_to_world(particles, at_position, normal, IMPACT_LIFETIME)
 
 
+func spawn_pickup_burst(at_position: Vector3) -> void:
+	var particles: GPUParticles3D = _create_particles(15, 0.4, Color(1.0, 0.9, 0.3, 0.8), 1.5, 5.0, 30.0, 2.0, 0.02, 0.06, -1.5)
+	_add_to_world(particles, at_position, Vector3.UP, 0.4)
+
+
 func spawn_death_spark(at_position: Vector3) -> void:
 	var particles: GPUParticles3D = _create_particles(25, DEATH_LIFETIME, Color(1.0, 0.5, 0.1, 0.9), 2.0, 6.0, 60.0, 2.0, 0.02, 0.08, -1.0)
 	_add_to_world(particles, at_position, Vector3.UP, DEATH_LIFETIME)

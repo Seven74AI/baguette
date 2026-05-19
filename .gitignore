@@ -41,6 +41,10 @@ Thumbs.db
 # Screenshots
 screenshots/
 
+# Test output
+test-results/
+test_results.xml
+
 # IDE / Editor
 .vscode/
 .idea/

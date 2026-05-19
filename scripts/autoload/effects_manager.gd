@@ -9,6 +9,14 @@ const IMPACT_LIFETIME: float = 0.6
 const DEATH_LIFETIME: float = 0.8
 const TRACER_LIFETIME: float = 0.07
 const FLASH_CORE_LIFETIME: float = 0.05
+const CROISSANT_TRAIL_LIFETIME: float = 1.5
+const PAIN_CHOCO_BURST_LIFETIME: float = 0.7
+const PIERCE_FLASH_LIFETIME: float = 0.12
+const BOSS_AURA_LIFETIME: float = 2.0
+const PHASE_BURST_LIFETIME: float = 1.5
+const FLOUR_DUST_LIFETIME: float = 3.0
+const OVEN_SHIMMER_LIFETIME: float = 2.0
+const STREET_AMBIANCE_LIFETIME: float = 5.0
 
 ## Death burst type — one per enemy archetype.
 enum DeathBurstType {
@@ -266,6 +274,223 @@ func _spawn_death_gordon(at_position: Vector3) -> void:
 	_add_to_world(particles, at_position, Vector3.UP, 1.5)
 	# Dramatic screen shake
 	_trigger_screen_shake(10.0)
+
+
+# ═══════════════════════════════════════════════════════════════
+# Public API — weapon-specific VFX (PHASE 5.1b)
+# ═══════════════════════════════════════════════════════════════
+
+## Spawns a golden trail ribbon for the croissant boomerang projectile.
+## Continuous particles (one_shot=false) — follows the projectile trajectory.
+func spawn_croissant_trail(at_position: Vector3, direction: Vector3) -> void:
+	var particles: GPUParticles3D = _create_particles(
+		15, CROISSANT_TRAIL_LIFETIME, Color(0.9, 0.7, 0.15, 0.8),
+		0.3, 1.0, 5.0, 0.5, 0.04, 0.12, -0.1, 0.05
+	)
+	# Continuous ribbon — not one_shot
+	particles.one_shot = false
+	particles.lifetime = CROISSANT_TRAIL_LIFETIME
+	_add_to_world(particles, at_position, direction, CROISSANT_TRAIL_LIFETIME)
+
+
+## Spawns a fire/explosion burst for pain au chocolat launcher impact.
+## Sphere burst + large fire particles with orange/red palette.
+func spawn_pain_au_chocolat_burst(at_position: Vector3, normal: Vector3) -> void:
+	# Fire burst particles — 35 particles, orange-red
+	var particles: GPUParticles3D = _create_particles(
+		35, PAIN_CHOCO_BURST_LIFETIME, Color(1.0, 0.45, 0.05, 0.95),
+		4.0, 10.0, 50.0, 2.5, 0.08, 0.25, -0.8, 0.3
+	)
+	_add_to_world(particles, at_position, normal, PAIN_CHOCO_BURST_LIFETIME)
+
+	# Smoke puff mesh at impact
+	var mesh_inst := MeshInstance3D.new()
+	var quad := QuadMesh.new()
+	quad.size = Vector2(1.5, 1.5)
+	mesh_inst.mesh = quad
+	mesh_inst.global_position = at_position + normal * 0.1
+	if normal.length() > 0.001:
+		mesh_inst.look_at(at_position + normal, Vector3.UP)
+
+	var mat := StandardMaterial3D.new()
+	mat.albedo_color = Color(0.3, 0.2, 0.15, 0.5)
+	mat.emission_enabled = true
+	mat.emission = Color(0.5, 0.25, 0.05)
+	mat.emission_energy_multiplier = 1.0
+	mat.billboard_mode = 2  # BILLBOARD_FIXED_Y
+	mat.transparency = 1  # TRANSPARENCY_ALPHA
+	mat.cull_mode = 2  # CULL_DISABLED
+	mesh_inst.material_override = mat
+
+	_add_mesh_to_world(mesh_inst, 0.5)
+
+
+## Spawns an enhanced pierce flash for the baguette gun.
+## Creates a linear streak (golden-brown cylinder) + impact spark particles.
+func spawn_baguette_pierce_flash(from: Vector3, to: Vector3) -> void:
+	# Linear streak mesh
+	var mesh_inst := MeshInstance3D.new()
+	var cylinder := CylinderMesh.new()
+	cylinder.top_radius = 0.06
+	cylinder.bottom_radius = 0.06
+	cylinder.height = from.distance_to(to)
+	cylinder.radial_segments = 8
+	mesh_inst.mesh = cylinder
+
+	var mid_point := from.lerp(to, 0.5)
+	mesh_inst.global_position = mid_point
+	var dir := (to - from).normalized()
+	if dir.length() > 0.001:
+		var up := Vector3.UP
+		var axis := up.cross(dir).normalized()
+		var angle := up.angle_to(dir)
+		if axis.length() > 0.001:
+			mesh_inst.global_rotate(axis, angle)
+		elif angle > 0.001:
+			mesh_inst.global_rotate(Vector3.RIGHT, angle)
+
+	var mat := StandardMaterial3D.new()
+	mat.albedo_color = Color(0.9, 0.7, 0.15)
+	mat.emission_enabled = true
+	mat.emission = Color(1.0, 0.8, 0.2)
+	mat.emission_energy_multiplier = 3.0
+	mat.transparency = 1  # TRANSPARENCY_ALPHA
+	mat.cull_mode = 2  # CULL_DISABLED
+	mesh_inst.material_override = mat
+
+	_add_mesh_to_world(mesh_inst, PIERCE_FLASH_LIFETIME)
+
+	# Impact spark particles at the target point
+	var spark: GPUParticles3D = _create_particles(
+		12, 0.25, Color(1.0, 0.85, 0.2, 0.9),
+		1.5, 4.0, 25.0, 1.5, 0.03, 0.08, -0.3, 0.1
+	)
+	_add_to_world(spark, to, Vector3.UP, 0.25)
+
+
+# ═══════════════════════════════════════════════════════════════
+# Public API — boss VFX placeholders (PHASE 5.1b)
+# ═══════════════════════════════════════════════════════════════
+
+## Spawns an energy aura (glow outline) around a boss at the given position.
+## Creates a translucent sphere mesh with emission glow.
+func spawn_boss_aura(at_position: Vector3, radius: float) -> void:
+	var mesh_inst := MeshInstance3D.new()
+	var sphere := SphereMesh.new()
+	sphere.radius = radius
+	sphere.height = radius * 2.0
+	sphere.radial_segments = 32
+	sphere.rings = 16
+	mesh_inst.mesh = sphere
+	mesh_inst.global_position = at_position
+
+	var mat := StandardMaterial3D.new()
+	mat.albedo_color = Color(0.8, 0.2, 0.8, 0.25)
+	mat.emission_enabled = true
+	mat.emission = Color(0.6, 0.1, 1.0)
+	mat.emission_energy_multiplier = 2.0
+	mat.transparency = 1  # TRANSPARENCY_ALPHA
+	mat.cull_mode = 2  # CULL_DISABLED
+	mat.shading_mode = 1  # UNSHADED
+	mesh_inst.material_override = mat
+
+	_add_mesh_to_world(mesh_inst, BOSS_AURA_LIFETIME)
+
+
+## Spawns a phase transition burst — expanding ring + particle shockwave.
+## Used when a boss transitions between phases.
+func spawn_phase_transition_burst(at_position: Vector3, radius: float) -> void:
+	# Expanding ring mesh (torus approximation via cylinder ring visual)
+	var ring := MeshInstance3D.new()
+	var torus := TorusMesh.new()
+	torus.inner_radius = radius * 0.8
+	torus.outer_radius = radius * 1.0
+	ring.mesh = torus
+	ring.global_position = at_position
+
+	var ring_mat := StandardMaterial3D.new()
+	ring_mat.albedo_color = Color(1.0, 0.5, 0.9, 0.6)
+	ring_mat.emission_enabled = true
+	ring_mat.emission = Color(0.8, 0.3, 1.0)
+	ring_mat.emission_energy_multiplier = 3.0
+	ring_mat.transparency = 1  # TRANSPARENCY_ALPHA
+	ring_mat.cull_mode = 2  # CULL_DISABLED
+	ring_mat.shading_mode = 1  # UNSHADED
+	ring.material_override = ring_mat
+
+	_add_mesh_to_world(ring, PHASE_BURST_LIFETIME)
+
+	# Shockwave particles
+	var particles: GPUParticles3D = _create_particles(
+		40, PHASE_BURST_LIFETIME, Color(0.8, 0.4, 1.0, 0.85),
+		4.0, 12.0, 60.0, 2.0, 0.06, 0.2, -0.5, 0.5
+	)
+	_add_to_world(particles, at_position, Vector3.UP, PHASE_BURST_LIFETIME)
+
+
+# ═══════════════════════════════════════════════════════════════
+# Public API — environmental particles (PHASE 5.1b)
+# ═══════════════════════════════════════════════════════════════
+
+## Spawns floating flour dust motes for bakery interior ambiance.
+## Continuous warm white particles with very low velocity (drifting).
+func spawn_flour_dust(at_position: Vector3, radius: float) -> void:
+	var particles: GPUParticles3D = _create_particles(
+		20, FLOUR_DUST_LIFETIME, Color(0.95, 0.92, 0.82, 0.6),
+		0.1, 0.5, 360.0, 0.2, 0.02, 0.08, 0.05, radius
+	)
+	particles.one_shot = false
+	particles.lifetime = FLOUR_DUST_LIFETIME
+	particles.amount = 20
+	_add_to_world(particles, at_position, Vector3.UP, FLOUR_DUST_LIFETIME)
+
+
+## Spawns oven heat shimmer — warm glow + heat distortion particles.
+## Used near oven props in bakery interiors.
+func spawn_oven_heat_shimmer(at_position: Vector3, radius: float) -> void:
+	# Warm glow sphere
+	var mesh_inst := MeshInstance3D.new()
+	var sphere := SphereMesh.new()
+	sphere.radius = radius * 0.5
+	sphere.height = radius
+	sphere.radial_segments = 16
+	sphere.rings = 8
+	mesh_inst.mesh = sphere
+	mesh_inst.global_position = at_position
+
+	var mat := StandardMaterial3D.new()
+	mat.albedo_color = Color(1.0, 0.6, 0.1, 0.2)
+	mat.emission_enabled = true
+	mat.emission = Color(1.0, 0.5, 0.05)
+	mat.emission_energy_multiplier = 1.5
+	mat.transparency = 1  # TRANSPARENCY_ALPHA
+	mat.cull_mode = 2  # CULL_DISABLED
+	mat.shading_mode = 1  # UNSHADED
+	mesh_inst.material_override = mat
+
+	_add_mesh_to_world(mesh_inst, OVEN_SHIMMER_LIFETIME)
+
+	# Rising heat particles
+	var particles: GPUParticles3D = _create_particles(
+		10, OVEN_SHIMMER_LIFETIME, Color(1.0, 0.7, 0.3, 0.4),
+		0.2, 0.8, 15.0, 0.3, 0.03, 0.1, 0.3, radius
+	)
+	particles.one_shot = false
+	particles.lifetime = OVEN_SHIMMER_LIFETIME
+	_add_to_world(particles, at_position, Vector3.UP, OVEN_SHIMMER_LIFETIME)
+
+
+## Spawns Parisian street ambiance — dust motes, paper scraps, distant effects.
+## Large radius ambient particle system for street environments.
+func spawn_street_ambiance(at_position: Vector3, radius: float) -> void:
+	# Main dust/ambient particles — spread across large radius
+	var particles: GPUParticles3D = _create_particles(
+		25, STREET_AMBIANCE_LIFETIME, Color(0.75, 0.72, 0.68, 0.5),
+		0.05, 0.4, 360.0, 0.1, 0.01, 0.06, 0.02, radius
+	)
+	particles.one_shot = false
+	particles.lifetime = STREET_AMBIANCE_LIFETIME
+	_add_to_world(particles, at_position, Vector3.UP, STREET_AMBIANCE_LIFETIME)
 
 
 # ═══════════════════════════════════════════════════════════════

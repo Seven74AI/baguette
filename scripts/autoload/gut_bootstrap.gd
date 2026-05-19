@@ -7,5 +7,10 @@ extends Node
 
 # Force-compile GutUtils and GutTest so class_name is globally registered
 # GutTest has the same headless class_name resolution bug as GutUtils
+# Project classes also need preloading for GUT headless resolution
 const _GUT_UTILS = preload("res://addons/gut/utils.gd")
 const _GUT_TEST = preload("res://addons/gut/test.gd")
+const _CROISSANT_PROJECTILE = preload("res://scenes/weapons/croissant_projectile.gd")
+const _CROISSANT_BOOMERANG = preload("res://scenes/weapons/croissant_boomerang.gd")
+const _WEAPON_MANAGER = preload("res://scripts/weapons/weapon_manager.gd")
+const _CROISSANT_MESH_GEN = preload("res://scenes/weapons/croissant_mesh_generator.gd")

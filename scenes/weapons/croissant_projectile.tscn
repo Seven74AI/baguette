@@ -1,0 +1,35 @@
+[gd_scene load_steps=7 format=3 uid="uid://dcprojcroissant01"]
+
+[ext_resource type="Script" path="res://scenes/weapons/croissant_projectile.gd" id="1_proj_script"]
+[ext_resource type="Script" path="res://scenes/weapons/croissant_mesh_generator.gd" id="2_croissant_mesh"]
+
+[sub_resource type="SphereShape3D" id="sphere_hit"]
+radius = 0.4
+
+[sub_resource type="SphereMesh" id="sphere_vis"]
+radius = 0.25
+height = 0.5
+
+[sub_resource type="StandardMaterial3D" id="mat_croissant"]
+albedo_color = Color(0.85, 0.65, 0.13, 1.0)
+emission_enabled = true
+emission = Color(0.3, 0.2, 0.05, 1.0)
+
+[node name="CroissantProjectile" type="Node3D"]
+script = ExtResource("1_proj_script")
+
+[node name="HitArea" type="Area3D" parent="."]
+collision_layer = 4
+collision_mask = 1
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HitArea"]
+shape = SubResource("sphere_hit")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+script = ExtResource("2_croissant_mesh")
+curve_radius = 0.6
+tube_radius = 0.12
+arc_angle_deg = 200.0
+ring_segments = 12
+path_segments = 20
+endpoint_taper = 0.5

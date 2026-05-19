@@ -1,11 +1,11 @@
 [gd_scene load_steps=9 format=3 uid="uid://dbakrack01"]
 
 [sub_resource type="StandardMaterial3D" id="mat_wood"]
-albedo_color = Color(0.55, 0.35, 0.15, 1.0)
+albedo_color = Color(0.910, 0.835, 0.718, 1.0)  # Palette.WARM_BEIGE
 roughness = 0.8
 
 [sub_resource type="StandardMaterial3D" id="mat_baguette"]
-albedo_color = Color(0.82, 0.68, 0.45, 1.0)
+albedo_color = Color(0.831, 0.639, 0.329, 1.0)  # Palette.GOLDEN_BROWN
 roughness = 0.65
 
 [sub_resource type="BoxMesh" id="shelf_mesh"]

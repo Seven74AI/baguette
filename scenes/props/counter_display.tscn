@@ -1,11 +1,11 @@
 [gd_scene load_steps=5 format=3 uid="uid://dcounter01"]
 
 [sub_resource type="StandardMaterial3D" id="mat_wood"]
-albedo_color = Color(0.55, 0.35, 0.15, 1.0)
+albedo_color = Color(0.910, 0.835, 0.718, 1.0)  # Palette.WARM_BEIGE
 roughness = 0.75
 
 [sub_resource type="StandardMaterial3D" id="mat_glass"]
-albedo_color = Color(0.95, 0.90, 0.75, 0.6)
+albedo_color = Color(0.961, 0.941, 0.882, 0.6)  # Palette.CREAM
 roughness = 0.2
 
 [sub_resource type="BoxMesh" id="counter_top"]

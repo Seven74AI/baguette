@@ -1,14 +1,14 @@
 [gd_scene load_steps=5 format=3 uid="uid://dlamp01"]
 
 [sub_resource type="StandardMaterial3D" id="mat_pole"]
-albedo_color = Color(0.50, 0.30, 0.10, 1.0)
+albedo_color = Color(0.290, 0.290, 0.290, 1.0)  # Palette.COBBLESTONE_GREY
 metallic = 0.6
 roughness = 0.5
 
 [sub_resource type="StandardMaterial3D" id="mat_light"]
-albedo_color = Color(0.80, 0.60, 0.10, 1.0)
+albedo_color = Color(0.239, 0.839, 0.816, 1.0)  # Palette.FADED_CYAN
 emission_enabled = true
-emission = Color(0.95, 0.80, 0.20, 1.0)
+emission = Color(0.239, 0.839, 0.816, 1.0)  # Palette.FADED_CYAN
 emission_energy_multiplier = 3.0
 
 [sub_resource type="CylinderMesh" id="pole_mesh"]

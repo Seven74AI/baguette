@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://dsourdblob01"]
+[gd_scene load_steps=5 format=3 uid="uid://dsourdblob01"]
 
 [ext_resource type="Script" path="res://scenes/enemies/sourdough_blob.gd" id="1_blob_script"]
 [ext_resource type="Script" path="res://scripts/components/health_component.gd" id="1_health_script"]
@@ -6,6 +6,10 @@
 
 [sub_resource type="SphereShape3D" id="sphere_body"]
 radius = 0.7
+
+[sub_resource type="StandardMaterial3D" id="mat_cream_override"]
+albedo_color = Color(0.961, 0.941, 0.882, 1.0)  # Palette.CREAM
+roughness = 0.7
 
 [node name="SourdoughBlob" type="CharacterBody3D" groups=["enemy"]]
 script = ExtResource("1_blob_script")
@@ -17,6 +21,7 @@ shape = SubResource("sphere_body")
 position = Vector3(0, 0.7, 0)
 
 [node name="Model" parent="." instance=ExtResource("1_model")]
+material_override = SubResource("mat_cream_override")
 
 [node name="HealthComponent" type="Node" parent="."]
 script = ExtResource("1_health_script")

@@ -6,13 +6,13 @@
 size = Vector3(0.05, 0.05, 0.02)
 
 [sub_resource type="StandardMaterial3D" id="mat_flash"]
-albedo_color = Color(1.0, 0.9, 0.2, 1.0)
+albedo_color = Color(0.910, 0.365, 0.247, 1.0)  # Palette.ORANGE_RED
 emission_enabled = true
-emission = Color(1.0, 0.8, 0.1, 1.0)
+emission = Color(0.910, 0.365, 0.247, 1.0)  # Palette.ORANGE_RED
 emission_energy_multiplier = 4.0
 
 [sub_resource type="StandardMaterial3D" id="mat_bread"]
-albedo_color = Color(0.831, 0.639, 0.329, 1.0)
+albedo_color = Color(0.831, 0.639, 0.329, 1.0)  # Palette.GOLDEN_BROWN
 roughness = 0.65
 
 [sub_resource type="CylinderMesh" id="cyl_barrel"]
@@ -21,7 +21,7 @@ bottom_radius = 0.08
 height = 1.8
 
 [sub_resource type="StandardMaterial3D" id="mat_metal"]
-albedo_color = Color(0.15, 0.15, 0.18, 1.0)
+albedo_color = Color(0.290, 0.290, 0.290, 1.0)  # Palette.COBBLESTONE_GREY
 metallic = 0.8
 roughness = 0.4
 

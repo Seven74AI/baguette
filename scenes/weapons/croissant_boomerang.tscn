@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://scenes/weapons/croissant_mesh_generator.gd" id="2_croissant_mesh_gen"]
 
 [sub_resource type="StandardMaterial3D" id="mat_golden"]
-albedo_color = Color(0.831, 0.639, 0.329, 1.0)
+albedo_color = Color(0.831, 0.639, 0.329, 1.0)  # Palette.GOLDEN_BROWN
 roughness = 0.6
 
 [node name="CroissantBoomerang" type="Node3D"]

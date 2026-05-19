@@ -1,11 +1,11 @@
 [gd_scene load_steps=5 format=3 uid="uid://dbench01"]
 
 [sub_resource type="StandardMaterial3D" id="mat_seat"]
-albedo_color = Color(0.55, 0.35, 0.15, 1.0)
+albedo_color = Color(0.910, 0.835, 0.718, 1.0)  # Palette.WARM_BEIGE
 roughness = 0.75
 
 [sub_resource type="StandardMaterial3D" id="mat_leg"]
-albedo_color = Color(0.50, 0.30, 0.10, 1.0)
+albedo_color = Color(0.290, 0.290, 0.290, 1.0)  # Palette.COBBLESTONE_GREY
 roughness = 0.7
 
 [sub_resource type="BoxMesh" id="seat_mesh"]

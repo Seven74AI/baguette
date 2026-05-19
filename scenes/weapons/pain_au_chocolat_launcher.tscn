@@ -8,7 +8,7 @@ bottom_radius = 0.09
 height = 2.0
 
 [sub_resource type="StandardMaterial3D" id="mat_chocolate"]
-albedo_color = Color(0.36, 0.23, 0.12, 1.0)
+albedo_color = Color(0.545, 0.369, 0.235, 1.0)  # Palette.CRUST
 roughness = 0.55
 metallic = 0.1
 

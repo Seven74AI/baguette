@@ -2,12 +2,13 @@ extends "res://addons/gut/test.gd"
 ## Tests for the BaguetteGun weapon — verifies firing, ammo, reload, and damage application.
 
 const HealthComponent = preload("res://scripts/components/health_component.gd")
+const BaguetteGunClass = preload("res://scenes/weapons/baguette_gun.gd")
 
-var _gun: BaguetteGun
+var _gun: BaguetteGunClass
 
 
 func before_each() -> void:
-	_gun = BaguetteGun.new()
+	_gun = BaguetteGunClass.new()
 	# Manually add required children
 	var raycast := RayCast3D.new()
 	raycast.name = "RayCast3D"

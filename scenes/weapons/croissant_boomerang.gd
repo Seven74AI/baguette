@@ -12,6 +12,8 @@ signal hit_enemy(enemy: Node)
 @export var max_range: float = 25.0
 @export var return_speed: float = 20.0
 
+@onready var _weapon_model: MeshInstance3D = $WeaponModel
+
 var _is_ready: bool = true
 var _active_projectile: Node = null
 

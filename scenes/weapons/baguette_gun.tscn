@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://dweapbaguette01"]
+[gd_scene load_steps=10 format=3 uid="uid://dweapbaguette01"]
 
 [ext_resource type="Script" path="res://scenes/weapons/baguette_gun.gd" id="1_gun_script"]
 
@@ -11,8 +11,36 @@ emission_enabled = true
 emission = Color(1.0, 0.8, 0.1, 1.0)
 emission_energy_multiplier = 4.0
 
+[sub_resource type="StandardMaterial3D" id="mat_bread"]
+albedo_color = Color(0.831, 0.639, 0.329, 1.0)
+roughness = 0.65
+
+[sub_resource type="CylinderMesh" id="cyl_barrel"]
+top_radius = 0.06
+bottom_radius = 0.08
+height = 1.8
+
+[sub_resource type="StandardMaterial3D" id="mat_metal"]
+albedo_color = Color(0.15, 0.15, 0.18, 1.0)
+metallic = 0.8
+roughness = 0.4
+
+[sub_resource type="BoxMesh" id="box_grip"]
+size = Vector3(0.12, 0.35, 0.08)
+
 [node name="BaguetteGun" type="Node3D"]
 script = ExtResource("1_gun_script")
+
+[node name="WeaponModel" type="MeshInstance3D" parent="."]
+mesh = SubResource("cyl_barrel")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.1)
+visible = true
+surface_material_override/0 = SubResource("mat_bread")
+
+[node name="Grip" type="MeshInstance3D" parent="WeaponModel"]
+mesh = SubResource("box_grip")
+transform = Transform3D(1, 0, 0, 0, 0.906308, -0.422618, 0, 0.422618, 0.906308, 0, -0.25, -0.2)
+surface_material_override/0 = SubResource("mat_metal")
 
 [node name="RayCast3D" type="RayCast3D" parent="."]
 target_position = Vector3(0, 0, -100)

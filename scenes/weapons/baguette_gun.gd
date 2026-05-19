@@ -28,6 +28,7 @@ signal ammo_depleted
 @onready var _fire_timer: Timer = $FireTimer
 @onready var _reload_timer: Timer = $ReloadTimer
 @onready var _muzzle_flash: MeshInstance3D = $MuzzleFlash
+@onready var _weapon_model: MeshInstance3D = $WeaponModel
 
 var _current_ammo: int = 0
 var _can_fire: bool = true

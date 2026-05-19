@@ -1,8 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://dplayermain01"]
+[gd_scene load_steps=11 format=3 uid="uid://dplayermain01"]
 
 [ext_resource type="Script" path="res://scenes/player/player.gd" id="1_player_script"]
 [ext_resource type="Script" path="res://scripts/components/health_component.gd" id="1_health_script"]
 [ext_resource type="PackedScene" uid="uid://dhudproto01" path="res://scenes/ui/hud.tscn" id="1_hud_scene"]
+[ext_resource type="PackedScene" path="res://assets/models/player/mitch.glb" id="1_model"]
+[ext_resource type="Script" path="res://scripts/player/player_animator.gd" id="1_animator_script"]
 
 [sub_resource type="CapsuleShape3D" id="capsule_body"]
 radius = 0.5
@@ -15,8 +17,9 @@ height = 0.3
 [sub_resource type="BoxShape3D" id="box_hitbox"]
 size = Vector3(1.0, 1.8, 1.0)
 
-[sub_resource type="BoxMesh" id="box_mesh"]
-size = Vector3(1.0, 1.8, 1.0)
+[sub_resource type="StandardMaterial3D" id="mat_creamy"]
+albedo_color = Color(0.961, 0.941, 0.882, 1.0)
+roughness = 0.6
 
 [node name="Player" type="CharacterBody3D"]
 script = ExtResource("1_player_script")
@@ -47,6 +50,12 @@ position = Vector3(0.3, -0.25, -0.5)
 
 [node name="HUD" parent="Camera3D" instance=ExtResource("1_hud_scene")]
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-visible = false
-mesh = SubResource("box_mesh")
+[node name="Model" parent="." instance=ExtResource("1_model")]
+material_override = SubResource("mat_creamy")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+[node name="PlayerAnimator" type="Node" parent="."]
+script = ExtResource("1_animator_script")
+target = NodePath("../Model")
+animation_player = NodePath("../AnimationPlayer")

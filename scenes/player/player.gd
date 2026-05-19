@@ -3,6 +3,7 @@ extends CharacterBody3D
 ## Attaches HealthComponent for damage. Camera3D child for first-person view.
 
 const HealthComponent = preload("res://scripts/components/health_component.gd")
+const PlayerAnimator = preload("res://scripts/player/player_animator.gd")
 
 @export_category("Movement")
 @export var walk_speed: float = 8.0
@@ -32,6 +33,7 @@ const HealthComponent = preload("res://scripts/components/health_component.gd")
 @onready var _camera: Camera3D = $Camera3D
 @onready var _weapon_mount: Node3D = $Camera3D/WeaponMount
 @onready var _head_collision: CollisionShape3D = $HeadCollision
+@onready var _animator: PlayerAnimator = $PlayerAnimator
 
 var _weapon: Node = null
 var _mouse_captured: bool = true
@@ -63,6 +65,10 @@ func _ready() -> void:
 		_weapon = _weapon_mount.get_child(0)
 	
 	_base_fov = _camera.fov
+	
+	# Start idle animation
+	if _animator:
+		_animator.play_idle()
 
 
 func _input(event: InputEvent) -> void:
@@ -88,6 +94,8 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("shoot") and _mouse_captured and _weapon:
 		if _weapon.has_method("fire"):
 			_weapon.fire()
+			if _animator:
+				_animator.play_shoot()
 	
 	# Weapon reload
 	if event.is_action_pressed("reload") and _weapon:
@@ -116,12 +124,16 @@ func _physics_process(delta: float) -> void:
 		velocity.x = _dash_direction.x * dash_speed
 		velocity.z = _dash_direction.z * dash_speed
 	else:
-		var target_speed := sprint_speed if Input.is_key_pressed(KEY_SHIFT) else walk_speed
+		var is_sprinting := Input.is_key_pressed(KEY_SHIFT) and direction.length() > 0.1
+		var target_speed := sprint_speed if is_sprinting else walk_speed
 		var target_velocity := direction * target_speed
 		
 		# Smooth acceleration
 		velocity.x = move_toward(velocity.x, target_velocity.x, acceleration * delta)
 		velocity.z = move_toward(velocity.z, target_velocity.z, acceleration * delta)
+		
+		# Update animation based on movement
+		_update_movement_animation(direction.length(), is_sprinting)
 	
 	move_and_slide()
 	
@@ -180,6 +192,10 @@ func _update_dash(delta: float) -> void:
 		# PHASE 3 polish: dash sound
 		if SoundManager:
 			SoundManager.play_dash_sound()
+		
+		# Play dash animation
+		if _animator:
+			_animator.play_dash()
 
 
 func get_camera() -> Camera3D:
@@ -202,3 +218,23 @@ func is_dashing() -> bool:
 ## Called by level script to link weapon after it's attached
 func link_weapon(weapon: Node) -> void:
 	_weapon = weapon
+
+
+## Update animation based on movement state.
+func _update_movement_animation(move_amount: float, is_sprinting: bool) -> void:
+	if not _animator:
+		return
+	if move_amount < 0.05:
+		_animator.play_idle()
+	elif is_sprinting:
+		_animator.play_sprint()
+	else:
+		_animator.play_walk()
+
+
+## Trigger death animation and disable player input.
+func die() -> void:
+	if _animator:
+		_animator.play_death()
+	set_physics_process(false)
+	set_process_input(false)

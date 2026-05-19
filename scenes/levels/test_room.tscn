@@ -1,0 +1,73 @@
+[gd_scene load_steps=2 format=3 uid="uid://dtestroomlevel01"]
+
+[ext_resource type="Script" path="res://scenes/levels/test_room.gd" id="1_level_script"]
+
+[node name="TestRoom" type="Node3D"]
+script = ExtResource("1_level_script")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+position = Vector3(5, 10, 5)
+rotation = Vector3(-0.6, -0.5, 0.5)
+light_energy = 2.0
+
+; ---- CSG ROOM (20x20x5m) ----
+
+[node name="Room" type="CSGCombiner3D" parent="."]
+use_collision = true
+
+; Floor
+[node name="Floor" type="CSGBox3D" parent="Room"]
+size = Vector3(20, 0.3, 20)
+position = Vector3(0, -0.15, 0)
+use_collision = true
+
+; Ceiling
+[node name="Ceiling" type="CSGBox3D" parent="Room"]
+size = Vector3(20, 0.3, 20)
+position = Vector3(0, 5.0, 0)
+use_collision = true
+
+; North wall
+[node name="WallNorth" type="CSGBox3D" parent="Room"]
+size = Vector3(20, 5.0, 0.3)
+position = Vector3(0, 2.5, -10)
+use_collision = true
+
+; South wall
+[node name="WallSouth" type="CSGBox3D" parent="Room"]
+size = Vector3(20, 5.0, 0.3)
+position = Vector3(0, 2.5, 10)
+use_collision = true
+
+; East wall
+[node name="WallEast" type="CSGBox3D" parent="Room"]
+size = Vector3(0.3, 5.0, 20)
+position = Vector3(10, 2.5, 0)
+use_collision = true
+
+; West wall
+[node name="WallWest" type="CSGBox3D" parent="Room"]
+size = Vector3(0.3, 5.0, 20)
+position = Vector3(-10, 2.5, 0)
+use_collision = true
+
+; ---- NAVIGATION (baked at runtime) ----
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+position = Vector3(0, 0, 0)
+
+; ---- SPAWN POINTS ----
+
+[node name="SpawnPoints" type="Node3D" parent="."]
+
+[node name="PlayerSpawn" type="Node3D" parent="SpawnPoints"]
+position = Vector3(0, 0, -8)
+
+[node name="EnemySpawn1" type="Node3D" parent="SpawnPoints" groups=["enemy_spawn"]]
+position = Vector3(5, 0, 5)
+
+[node name="EnemySpawn2" type="Node3D" parent="SpawnPoints" groups=["enemy_spawn"]]
+position = Vector3(-5, 0, 5)
+
+[node name="EnemySpawn3" type="Node3D" parent="SpawnPoints" groups=["enemy_spawn"]]
+position = Vector3(0, 0, 8)

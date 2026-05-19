@@ -29,7 +29,11 @@ var _look_rotation: Vector2 = Vector2.ZERO
 
 
 func _ready() -> void:
+	# Try to capture mouse — may fail in headless mode (display server limitation)
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	# Fallback: if headless server rejected capture, mark as not captured
+	if Input.get_mouse_mode() != Input.MOUSE_MODE_CAPTURED:
+		_mouse_captured = false
 	if not health_component:
 		health_component = $HealthComponent
 	

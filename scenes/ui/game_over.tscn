@@ -1,0 +1,84 @@
+[gd_scene load_steps=3 format=3 uid="uid://gameoverproto01"]
+
+[ext_resource type="Script" path="res://scenes/ui/game_over.gd" id="1_game_over_script"]
+
+[node name="GameOver" type="Control"]
+layout_mode = 3
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("1_game_over_script")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.12, 0.03, 0.03, 1.0)
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="ContentVBox" type="VBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="TitleLabel" type="Label" parent="CenterContainer/ContentVBox"]
+layout_mode = 2
+text = "VOUS ÊTES MORT"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Spacer1" type="Control" parent="CenterContainer/ContentVBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 30)
+
+[node name="StatsContainer" type="VBoxContainer" parent="CenterContainer/ContentVBox"]
+layout_mode = 2
+alignment = 1
+
+[node name="KillsLabel" type="Label" parent="CenterContainer/ContentVBox/StatsContainer"]
+layout_mode = 2
+text = "BAGUETTES: 0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RoomsLabel" type="Label" parent="CenterContainer/ContentVBox/StatsContainer"]
+layout_mode = 2
+text = "SALLES: 0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TimeLabel" type="Label" parent="CenterContainer/ContentVBox/StatsContainer"]
+layout_mode = 2
+text = "TEMPS: 0s"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DamageLabel" type="Label" parent="CenterContainer/ContentVBox/StatsContainer"]
+layout_mode = 2
+text = "DÉGÂTS: 0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Spacer2" type="Control" parent="CenterContainer/ContentVBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 40)
+
+[node name="ButtonsContainer" type="VBoxContainer" parent="CenterContainer/ContentVBox"]
+layout_mode = 2
+alignment = 1
+
+[node name="RestartButton" type="Button" parent="CenterContainer/ContentVBox/ButtonsContainer"]
+layout_mode = 2
+text = "RECOMMENCER"
+custom_minimum_size = Vector2(300, 60)
+
+[node name="Spacer3" type="Control" parent="CenterContainer/ContentVBox/ButtonsContainer"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 16)
+
+[node name="MenuButton" type="Button" parent="CenterContainer/ContentVBox/ButtonsContainer"]
+layout_mode = 2
+text = "MENU"
+custom_minimum_size = Vector2(300, 60)

@@ -25,6 +25,11 @@ var enemies_killed: int = 0
 var current_weapon_name: String = "Pistolet à Baguettes"
 var run_active: bool = false
 
+## Phase 4.1: New game loop tracking fields.
+var rooms_cleared: int = 0
+var run_time: float = 0.0
+var total_damage_dealt: int = 0
+
 ## Shared ammo pool (proto: single pool for all weapons).
 var _ammo_count: int = 0
 var _max_ammo: int = 30
@@ -39,11 +44,20 @@ var _upgrade_tokens: int = 0
 func start_run() -> void:
 	player_health = player_max_health
 	enemies_killed = 0
+	rooms_cleared = 0
+	run_time = 0.0
+	total_damage_dealt = 0
 	_ammo_count = 0
 	_active_buffs.clear()
 	_upgrade_tokens = 0
 	run_active = true
 	run_started.emit()
+
+
+func _process(delta: float) -> void:
+	if run_active:
+		run_time += delta
+		_update_buffs(delta)
 
 
 func damage_player(amount: int) -> void:
@@ -61,6 +75,14 @@ func heal_player(amount: int) -> void:
 
 func record_kill() -> void:
 	enemies_killed += 1
+
+
+func increment_rooms_cleared() -> void:
+	rooms_cleared += 1
+
+
+func record_damage_dealt(amount: int) -> void:
+	total_damage_dealt += amount
 
 
 func end_run(won: bool) -> void:
@@ -152,6 +174,9 @@ func _reset_for_testing() -> void:
 	player_health = 100
 	player_max_health = 100
 	enemies_killed = 0
+	rooms_cleared = 0
+	run_time = 0.0
+	total_damage_dealt = 0
 	_ammo_count = 0
 	_max_ammo = 30
 	_active_buffs.clear()

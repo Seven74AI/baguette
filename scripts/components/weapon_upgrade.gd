@@ -26,11 +26,12 @@ const MOD_MULTIPLIERS: Dictionary = {
 	ModType.FIRE_RATE: {"fire_rate": 1.10},
 	ModType.AMMO_CAPACITY: {"ammo": 2},       # absolute bonus
 	ModType.RANGE_EXTEND: {"range": 1.20},
-	ModType.FIRE_ELEMENT: {"damage_type": 3},   # FIRE
-	ModType.OVEN_ELEMENT: {"damage_type": 4},   # OVEN
+	ModType.FIRE_ELEMENT: {"damage_type": DamageTypes.FIRE},   # FIRE
+	ModType.OVEN_ELEMENT: {"damage_type": DamageTypes.OVEN},   # OVEN
 }
 
 # Mod slots per level: index = level → slot count
+const DamageTypes = preload("res://scripts/components/damage_types.gd")
 const SLOTS_PER_LEVEL: Array[int] = [0, 0, 1, 2, 3, 4]
 
 var _level: int = 1

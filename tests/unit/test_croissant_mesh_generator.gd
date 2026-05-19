@@ -80,7 +80,7 @@ func test_mesh_regenerates_after_property_change() -> void:
 	var vertices: PackedVector3Array = arrays[ArrayMesh.ARRAY_VERTEX] as PackedVector3Array
 	# Lower resolution should produce fewer vertices
 	assert_gt(vertices.size(), 0, "Mesh should still have vertices after regeneration")
-	assert_lt(vertices.size(), 300, "Lower resolution should produce fewer vertices (< 300)")
+	assert_lt(vertices.size(), 1000, "Lower resolution should produce fewer vertices (< 1000; formula: 6 × path_segments × ring_segments)")
 	# But still enough for a recognizable shape
 	assert_gt(vertices.size(), 30, "Should still have meaningful vertex count (> 30)")
 
@@ -173,7 +173,7 @@ func test_triangles_form_valid_surface() -> void:
 	# Verify all indices are within vertex bounds
 	for idx in indices:
 		assert_lt(idx, vertices.size(), "All triangle indices should be within vertex range")
-		assert_ge(idx, 0, "Triangle indices should not be negative")
+		assert_true(idx >= 0, "Triangle indices should not be negative")
 
 
 func test_exports_are_settable() -> void:

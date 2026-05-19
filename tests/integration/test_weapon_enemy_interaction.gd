@@ -73,7 +73,6 @@ func test_damage_types_get_name() -> void:
 	assert_eq(dt_instance._NAME_MAP[2], "Contondant")
 	assert_eq(dt_instance._NAME_MAP[3], "Feu")
 	assert_eq(dt_instance._NAME_MAP[4], "Four")
-	dt_instance.free()
 
 
 func test_weapon_default_damage_type_is_none() -> void:

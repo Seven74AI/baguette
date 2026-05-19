@@ -1,20 +1,12 @@
-[gd_scene load_steps=6 format=3 uid="uid://dcroissninj01"]
+[gd_scene load_steps=5 format=3 uid="uid://dcroissninj01"]
 
 [ext_resource type="Script" path="res://scenes/enemies/croissant_ninja.gd" id="1_ninja_script"]
 [ext_resource type="Script" path="res://scripts/components/health_component.gd" id="1_health_script"]
+[ext_resource type="PackedScene" uid="uid://xrecvqoxgs4x" path="res://assets/models/enemies/croissant_ninja.glb" id="1_model"]
 
 [sub_resource type="CapsuleShape3D" id="capsule_body"]
 radius = 0.35
 height = 1.0
-
-[sub_resource type="CylinderMesh" id="ninja_mesh"]
-top_radius = 0.2
-bottom_radius = 0.25
-height = 0.8
-
-[sub_resource type="StandardMaterial3D" id="ninja_mat"]
-albedo_color = Color(0.9, 0.72, 0.3, 1.0)
-roughness = 0.2
 
 [node name="CroissantNinja" type="CharacterBody3D" groups=["enemy"]]
 script = ExtResource("1_ninja_script")
@@ -25,10 +17,7 @@ collision_mask = 1
 shape = SubResource("capsule_body")
 position = Vector3(0, 0.5, 0)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-mesh = SubResource("ninja_mesh")
-material_override = SubResource("ninja_mat")
-position = Vector3(0, 0.4, 0)
+[node name="Model" parent="." instance=ExtResource("1_model")]
 
 [node name="HealthComponent" type="Node" parent="."]
 script = ExtResource("1_health_script")

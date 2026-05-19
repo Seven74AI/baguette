@@ -2,19 +2,11 @@
 
 [ext_resource type="Script" path="res://scenes/enemies/baguette_vivante.gd" id="1_vivante_script"]
 [ext_resource type="Script" path="res://scripts/components/health_component.gd" id="1_health_script"]
+[ext_resource type="PackedScene" uid="uid://cmvygvsxb00f7" path="res://assets/models/enemies/baguette_vivante.glb" id="1_model"]
 
 [sub_resource type="CapsuleShape3D" id="capsule_body"]
 radius = 0.3
 height = 1.2
-
-[sub_resource type="CylinderMesh" id="baguette_mesh"]
-top_radius = 0.15
-bottom_radius = 0.2
-height = 1.2
-
-[sub_resource type="StandardMaterial3D" id="baguette_mat"]
-albedo_color = Color(0.82, 0.71, 0.55, 1.0)
-roughness = 0.7
 
 [node name="BaguetteVivante" type="CharacterBody3D" groups=["enemy"]]
 script = ExtResource("1_vivante_script")
@@ -25,10 +17,7 @@ collision_mask = 1
 shape = SubResource("capsule_body")
 position = Vector3(0, 0.6, 0)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-mesh = SubResource("baguette_mesh")
-material_override = SubResource("baguette_mat")
-position = Vector3(0, 0.6, 0)
+[node name="Model" parent="." instance=ExtResource("1_model")]
 
 [node name="HealthComponent" type="Node" parent="."]
 script = ExtResource("1_health_script")

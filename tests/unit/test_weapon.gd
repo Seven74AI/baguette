@@ -1,4 +1,4 @@
-extends GutTest
+extends "res://addons/gut/test.gd"
 ## Tests for the BaguetteGun weapon — verifies firing, ammo, reload, and damage application.
 
 const HealthComponent = preload("res://scripts/components/health_component.gd")

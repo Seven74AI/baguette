@@ -1,4 +1,4 @@
-extends GutTest
+extends "res://addons/gut/test.gd"
 ## Tests for the HealthComponent — verifies health, damage, healing, and invulnerability.
 
 const HealthComponent = preload("res://scripts/components/health_component.gd")

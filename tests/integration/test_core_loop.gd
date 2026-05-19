@@ -1,4 +1,4 @@
-extends GutTest
+extends "res://addons/gut/test.gd"
 ## Integration tests for the proto core loop: player movement, weapon firing, enemy chase AI.
 ## Tests scene spawning and cross-system interactions.
 

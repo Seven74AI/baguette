@@ -1,4 +1,4 @@
-extends GutTest
+extends "res://addons/gut/test.gd"
 ## Bootstrap test — verifies the Godot project loads and basic systems are accessible.
 
 func test_project_loads_without_errors() -> void:

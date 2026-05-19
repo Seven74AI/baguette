@@ -1,7 +1,8 @@
 extends Control
-## PHASE 4.11: Unified Run Summary — shared by Game Over and Victory screens.
+## PHASE 5.1c: Unified Run Summary — shared by Game Over and Victory screens.
 ## Displays kills, rooms cleared, time survived, weapons used, total damage dealt.
 ## Supports two variants via the `variant` property: "game_over" (dark/red) or "victory" (golden).
+## Uses Palette autoload for consistent bakery color theme.
 
 ## Variant: "game_over" or "victory" — determines title text and color theme.
 @export var variant: String = "game_over":
@@ -88,7 +89,7 @@ func _apply_game_over_theme() -> void:
 	_title_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 
 	_apply_common_stats_style()
-	_apply_button_style(Color(0.55, 0.27, 0.07, 0.9), Color(0.85, 0.65, 0.13, 1.0))
+	_apply_button_style(Color(Palette.CRUST.r, Palette.CRUST.g, Palette.CRUST.b, 0.9), Palette.GOLDEN_BROWN)
 
 	_new_game_button.text = "NOUVELLE PARTIE"
 
@@ -98,18 +99,18 @@ func _apply_victory_theme() -> void:
 	_background.color = Color(0.1, 0.08, 0.03, 1.0)
 
 	_title_label.text = "VICTOIRE !"
-	_title_label.add_theme_color_override("font_color", Color(0.85, 0.65, 0.13, 1.0))
+	_title_label.add_theme_color_override("font_color", Palette.GOLDEN_BROWN)
 	_title_label.add_theme_font_size_override("font_size", 48)
 	_title_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 
 	_apply_common_stats_style()
-	_apply_button_style(Color(0.85, 0.65, 0.13, 0.3), Color(0.85, 0.65, 0.13, 1.0))
+	_apply_button_style(Color(Palette.GOLDEN_BROWN.r, Palette.GOLDEN_BROWN.g, Palette.GOLDEN_BROWN.b, 0.3), Palette.GOLDEN_BROWN)
 
 	_new_game_button.text = "NOUVELLE PARTIE"
 
 
 func _apply_common_stats_style() -> void:
-	var stat_color := Color(1.0, 0.97, 0.88, 0.9)
+	var stat_color := Palette.CREAM  # Warm cream/beige text
 	var stat_font_size := 22
 
 	var all_labels: Array[Label] = [_kills_label, _rooms_label, _time_label, _damage_label]
@@ -137,8 +138,8 @@ func _apply_button_style(bg_color: Color, border_color: Color) -> void:
 	_new_game_button.add_theme_stylebox_override("normal", btn_style)
 	_menu_button.add_theme_stylebox_override("normal", btn_style)
 
-	_new_game_button.add_theme_color_override("font_color", Color(1.0, 0.97, 0.88, 1.0))
-	_menu_button.add_theme_color_override("font_color", Color(1.0, 0.97, 0.88, 1.0))
+	_new_game_button.add_theme_color_override("font_color", Palette.CREAM)
+	_menu_button.add_theme_color_override("font_color", Palette.CREAM)
 
 	_new_game_button.add_theme_font_size_override("font_size", 20)
 	_menu_button.add_theme_font_size_override("font_size", 20)

@@ -54,6 +54,28 @@ vertical_alignment = 1
 theme_override_colors/font_color = Color(0.85, 0.65, 0.13, 0.5)
 theme_override_font_sizes/font_size = 8
 
+; ===== WEAPON SLOT (bottom center-left) =====
+[node name="WeaponSlot" type="Panel" parent="."]
+layout_mode = 0
+anchor_left = 0.0
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 290
+offset_top = -50
+offset_right = 500
+offset_bottom = -20
+mouse_filter = 2
+
+[node name="WeaponLabel" type="Label" parent="WeaponSlot"]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+text = ""
+horizontal_alignment = 1
+vertical_alignment = 1
+theme_override_colors/font_color = Color(0.85, 0.65, 0.13, 1.0)
+theme_override_font_sizes/font_size = 14
+
 ; ===== HEALTH BAR (bottom left) =====
 [node name="HealthBar" type="ProgressBar" parent="."]
 layout_mode = 0
@@ -98,17 +120,28 @@ anchor_right = 1.0
 offset_left = -220
 offset_top = 10
 offset_right = -20
-offset_bottom = 42
+offset_bottom = 68
 
 [node name="KillLabel" type="Label" parent="KillPanel"]
 layout_mode = 0
 anchor_right = 1.0
-anchor_bottom = 1.0
+offset_bottom = 22
 text = "BAGUETTES: 0"
 horizontal_alignment = 2
 vertical_alignment = 1
 theme_override_colors/font_color = Color(1.0, 0.97, 0.88, 1.0)
 theme_override_font_sizes/font_size = 16
+
+[node name="ComboLabel" type="Label" parent="KillPanel"]
+layout_mode = 0
+anchor_right = 1.0
+offset_top = 26
+offset_bottom = 50
+text = ""
+horizontal_alignment = 2
+vertical_alignment = 1
+theme_override_colors/font_color = Color(0.85, 0.65, 0.13, 1.0)
+theme_override_font_sizes/font_size = 20
 
 ; ===== DASH INDICATOR (bottom center) =====
 [node name="DashPanel" type="Panel" parent="."]

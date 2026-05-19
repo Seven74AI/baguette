@@ -3,8 +3,8 @@ extends Control
 ## Designed to be added as a child of the existing HUD scene or Camera3D.
 ## Listens to GameState signals for real-time updates.
 
-const COLOR_GOLD := Color(0.85, 0.65, 0.13, 1.0)
-const COLOR_DARK := Color(0.17, 0.09, 0.05, 1.0)
+const COLOR_GOLD := Palette.GOLDEN_BROWN
+const COLOR_DARK := Palette.CRUST
 const COLOR_BLUE := Color(0.3, 0.5, 0.9, 1.0)
 const COLOR_RED := Color(0.8, 0.2, 0.1, 1.0)
 

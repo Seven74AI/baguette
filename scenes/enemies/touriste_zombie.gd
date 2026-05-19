@@ -129,6 +129,12 @@ func _on_death() -> void:
 	if GameState:
 		GameState.record_kill()
 	
+	# PHASE 3 polish: death particles + sound
+	if EffectsManager:
+		EffectsManager.spawn_death_spark(global_position)
+	if SoundManager:
+		SoundManager.play_enemy_death_sound()
+	
 	# Disable collision but keep body for a moment
 	set_process(false)
 	set_physics_process(false)

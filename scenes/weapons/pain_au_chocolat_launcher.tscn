@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://dwpnpainchocolat01"]
+
+[ext_resource type="Script" path="res://scenes/weapons/pain_au_chocolat_launcher.gd" id="1_launcher_script"]
+
+[sub_resource type="CylinderMesh" id="cyl_barrel"]
+top_radius = 0.07
+bottom_radius = 0.09
+height = 2.0
+
+[sub_resource type="StandardMaterial3D" id="mat_chocolate"]
+albedo_color = Color(0.36, 0.23, 0.12, 1.0)
+roughness = 0.55
+metallic = 0.1
+
+[node name="PainAuChocolatLauncher" type="Node3D"]
+script = ExtResource("1_launcher_script")
+
+[node name="WeaponModel" type="MeshInstance3D" parent="."]
+mesh = SubResource("cyl_barrel")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.1)
+visible = true
+surface_material_override/0 = SubResource("mat_chocolate")
+
+[node name="FireTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="ReloadTimer" type="Timer" parent="."]
+one_shot = true

@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://dprojpainchocolat01"]
+
+[ext_resource type="Script" path="res://scenes/weapons/pain_chocolat_projectile.gd" id="1_proj_script"]
+
+[sub_resource type="SphereShape3D" id="sphere_splash"]
+radius = 3.0
+
+[sub_resource type="SphereMesh" id="sphere_vis"]
+radius = 0.3
+height = 0.6
+
+[node name="PainChocolatProjectile" type="Node3D"]
+script = ExtResource("1_proj_script")
+
+[node name="SplashArea" type="Area3D" parent="."]
+collision_layer = 4
+collision_mask = 1
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SplashArea"]
+shape = SubResource("sphere_splash")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("sphere_vis")

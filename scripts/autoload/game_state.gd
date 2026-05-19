@@ -30,6 +30,9 @@ var rooms_cleared: int = 0
 var run_time: float = 0.0
 var total_damage_dealt: int = 0
 
+## Weapon registry — maps weapon_id (String) to weapon data (Dictionary).
+var weapon_registry: Dictionary = {}
+
 ## Shared ammo pool (proto: single pool for all weapons).
 var _ammo_count: int = 0
 var _max_ammo: int = 30
@@ -39,6 +42,10 @@ var _active_buffs: Array = []
 
 ## Weapon upgrade tokens.
 var _upgrade_tokens: int = 0
+
+
+func _ready() -> void:
+	_register_all_weapons()
 
 
 func start_run() -> void:
@@ -165,6 +172,32 @@ func add_upgrade_token(count: int) -> void:
 
 func get_upgrade_tokens() -> int:
 	return _upgrade_tokens
+
+
+# ── Weapon Registry ──────────────────────────────────────────────────
+
+## Register a weapon in the central registry.
+func register_weapon(weapon_id: String, damage: int, damage_types: Array, max_ammo: int = 1, reload_time: float = 1.0) -> void:
+	weapon_registry[weapon_id] = {
+		"damage": damage,
+		"damage_types": damage_types,
+		"max_ammo": max_ammo,
+		"reload_time": reload_time,
+	}
+
+
+## Retrieve weapon data from the registry. Returns empty Dictionary if not found.
+func get_weapon_data(weapon_id: String) -> Dictionary:
+	return weapon_registry.get(weapon_id, {})
+
+
+func _register_all_weapons() -> void:
+	# Existing weapons
+	register_weapon("baguette_gun", 25, [1], 6, 1.5)     # SLASH
+	register_weapon("croissant_boomerang", 12, [2], 0, 0)  # BLUNT, no ammo
+
+	# Pain au Chocolat Launcher — Phase 4.9
+	register_weapon("pain_au_chocolat_launcher", 60, [3, 1], 3, 2.5)  # FIRE + SLASH
 
 
 # ── Test helpers ──────────────────────────────────────────────────

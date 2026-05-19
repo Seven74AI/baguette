@@ -58,3 +58,22 @@ static func critique_weaknesses():
 	w.set_resistance(DamageTypes.FIRE, 0.5)     # Blindés contre les flammes normales
 	w.set_resistance(DamageTypes.SLASH, 0.75)   # Peau épaisse
 	return w
+
+
+## Pain au Chocolat Launcher matchup: Baguette Vivante is weak to FIRE + SLASH.
+## Flaming pastry shrapnel tears through animated bread.
+static func baguette_vivante_weaknesses():
+	var w := new()
+	w.set_weakness(DamageTypes.FIRE, 1.5)   # Pain au chocolat brûlant
+	w.set_weakness(DamageTypes.SLASH, 1.3)  # Éclats de pâtisserie tranchants
+	return w
+
+
+## Pain au Chocolat Launcher matchup: Gordon Bleu is weak to FIRE + SLASH.
+## Even a Michelin-starred chef can't withstand explosive patisserie.
+static func gordon_bleu_weaknesses():
+	var w := new()
+	w.set_weakness(DamageTypes.FIRE, 1.5)   # Fourrage au chocolat fondu
+	w.set_weakness(DamageTypes.SLASH, 1.3)  # Croûte de pâtisserie acérée
+	w.set_weakness(DamageTypes.OVEN, 2.0)    # Keep existing OVEN weakness
+	return w

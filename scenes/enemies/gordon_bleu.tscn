@@ -1,0 +1,62 @@
+[gd_scene load_steps=9 format=3 uid="uid://dgboss001"]
+
+[ext_resource type="Script" path="res://scenes/enemies/gordon_bleu.gd" id="1_boss_script"]
+[ext_resource type="Script" path="res://scripts/components/health_component.gd" id="1_health_script"]
+
+[sub_resource type="CapsuleShape3D" id="capsule_body"]
+radius = 1.2
+height = 3.5
+
+[sub_resource type="CylinderMesh" id="body_mesh"]
+top_radius = 1.0
+bottom_radius = 1.2
+height = 3.0
+
+[sub_resource type="StandardMaterial3D" id="chef_apron"]
+albedo_color = Color(0.95, 0.95, 0.95, 1.0)
+roughness = 0.5
+
+[sub_resource type="CylinderMesh" id="toque_mesh"]
+top_radius = 1.1
+bottom_radius = 0.9
+height = 1.2
+
+[sub_resource type="StandardMaterial3D" id="toque_mat"]
+albedo_color = Color(1.0, 1.0, 1.0, 1.0)
+roughness = 0.3
+
+[sub_resource type="CylinderMesh" id="rolling_pin_mesh"]
+top_radius = 0.15
+bottom_radius = 0.15
+height = 2.0
+
+[node name="GordonBleu" type="CharacterBody3D" groups=["enemy", "boss"]]
+script = ExtResource("1_boss_script")
+collision_layer = 2
+collision_mask = 1
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("capsule_body")
+position = Vector3(0, 1.75, 0)
+
+[node name="Body" type="MeshInstance3D" parent="."]
+mesh = SubResource("body_mesh")
+material_override = SubResource("chef_apron")
+position = Vector3(0, 1.5, 0)
+
+[node name="Toque" type="MeshInstance3D" parent="."]
+mesh = SubResource("toque_mesh")
+material_override = SubResource("toque_mat")
+position = Vector3(0, 3.1, 0)
+
+[node name="RollingPin" type="MeshInstance3D" parent="."]
+mesh = SubResource("rolling_pin_mesh")
+position = Vector3(1.0, 1.2, 0)
+rotation_degrees = Vector3(0, 0, 90)
+
+[node name="HealthComponent" type="Node" parent="."]
+script = ExtResource("1_health_script")
+max_health = 2000
+current_health = 2000
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]

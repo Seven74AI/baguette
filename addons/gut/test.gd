@@ -38,12 +38,14 @@ class_name GutTest
 # ##############################################################################
 extends Node
 
+const GutUtils = preload("res://addons/gut/utils.gd")
+
 var _compare = GutUtils.Comparator.new()
 
 
 # Need a reference to the instance that is running the tests.  This
 # is set by the gut class when it runs the test script.
-var gut: GutMain = null
+var gut = null
 
 var _disable_strict_datatype_checks = false
 # Holds all the text for a test's fail/pass.  This is used for testing purposes

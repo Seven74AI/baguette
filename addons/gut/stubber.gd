@@ -11,6 +11,8 @@
 # 		method_name2: [StubParams, StubParams]
 # 	}
 # }
+const GutUtils = preload("res://addons/gut/utils.gd")
+
 var returns = {}
 var _lgr = GutUtils.get_logger()
 var _strutils = GutUtils.Strutils.new()

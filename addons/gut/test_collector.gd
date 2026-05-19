@@ -5,6 +5,7 @@
 #
 # This also handles exporting and importing tests.
 # ------------------------------------------------------------------------------
+const GutUtils = preload("res://addons/gut/utils.gd")
 var CollectedScript = GutUtils.CollectedScript
 var CollectedTest = GutUtils.CollectedTest
 

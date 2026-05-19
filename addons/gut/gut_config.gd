@@ -4,6 +4,7 @@
 # to a json file.  It is also responsible for applying these settings to GUT.
 #
 # ##############################################################################
+const GutUtils = preload("res://addons/gut/utils.gd")
 var valid_fonts = ['AnonymousPro', 'CourierPro', 'LobsterTwo', 'Default']
 
 var default_options = {

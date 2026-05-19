@@ -1,6 +1,8 @@
 # Temporary base script for gut.gd to hold the things to be remvoed and added
 # to some utility somewhere.
 extends Node
+const GutUtils = preload("res://addons/gut/utils.gd")
+
 
 # ------------------------------------------------------------------------------
 # deletes all files in a given directory

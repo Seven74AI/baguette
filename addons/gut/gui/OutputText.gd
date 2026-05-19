@@ -1,4 +1,6 @@
 @tool
+const GutUtils = preload("res://addons/gut/utils.gd")
+
 extends VBoxContainer
 
 var GutEditorGlobals = load('res://addons/gut/gui/editor_globals.gd')

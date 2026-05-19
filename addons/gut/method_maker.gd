@@ -1,3 +1,5 @@
+const GutUtils = preload("res://addons/gut/utils.gd")
+
 class CallParameters:
 	var p_name = null
 	var default = null

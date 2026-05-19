@@ -1,4 +1,6 @@
 @tool
+const GutUtils = preload("res://addons/gut/utils.gd")
+
 extends Control
 
 const RUNNER_JSON_PATH = 'res://.gut_editor_config.json'

@@ -29,6 +29,8 @@
 # This class wraps around the various printers and supplies formatting for the
 # various message types (error, warning, etc).
 # ##############################################################################
+const GutUtils = preload("res://addons/gut/utils.gd")
+
 var types = {
 	debug = 'debug',
 	deprecated = 'deprecated',

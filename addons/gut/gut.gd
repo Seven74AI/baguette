@@ -1,6 +1,6 @@
 extends 'res://addons/gut/gut_to_move.gd'
 class_name GutMain
-
+const GutHookScript = preload("res://addons/gut/hook_script.gd")
 # ##############################################################################
 #
 # View the readme at https://github.com/bitwes/Gut/blob/master/README.md for usage

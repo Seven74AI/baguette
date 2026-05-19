@@ -6,6 +6,8 @@
 #
 # This class also facilitates all the exporting and importing of tests.
 # ------------------------------------------------------------------------------
+const GutUtils = preload("res://addons/gut/utils.gd")
+
 var CollectedTest = GutUtils.CollectedTest
 
 var _lgr = null

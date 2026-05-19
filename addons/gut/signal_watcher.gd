@@ -26,6 +26,8 @@
 
 # Some arbitrary string that should never show up by accident.  If it does, then
 # shame on  you.
+const GutUtils = preload("res://addons/gut/utils.gd")
+
 const ARG_NOT_SET = '_*_argument_*_is_*_not_set_*_'
 
 # This hash holds the objects that are being watched, the signals that are being

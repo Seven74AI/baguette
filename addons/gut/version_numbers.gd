@@ -49,7 +49,7 @@ class VerNumTools:
 			idx += 1
 
 		# still null means each index was the same.
-		return GutUtils.nvl(is_ok, true)
+		return is_ok if is_ok != null else true
 
 
 	static func is_version_eq(version, expected):

@@ -1,3 +1,5 @@
+const GutUtils = preload("res://addons/gut/utils.gd")
+
 var _params = null
 var _call_count = 0
 var _logger = null

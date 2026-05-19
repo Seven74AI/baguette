@@ -2,6 +2,8 @@
 # Used to keep track of info about each test ran.
 # ------------------------------------------------------------------------------
 # the name of the function
+const GutUtils = preload("res://addons/gut/utils.gd")
+
 var name = ""
 
 # flag to know if the name has been printed yet.  Used by the logger.

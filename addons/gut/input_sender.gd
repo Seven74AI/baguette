@@ -184,6 +184,7 @@ class MouseDraw:
 # ##############################################################################
 var InputFactory = load("res://addons/gut/input_factory.gd")
 
+const GutUtils = preload("res://addons/gut/utils.gd")
 const INPUT_WARN = 'If using Input as a reciever it will not respond to *_down events until a *_up event is recieved.  Call the appropriate *_up event or use hold_for(...) to automatically release after some duration.'
 
 var _lgr = GutUtils.get_logger()

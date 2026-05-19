@@ -1,4 +1,6 @@
 class_name GutStringUtils
+const GutUtils = preload("res://addons/gut/utils.gd")
+
 
 # Hash containing all the built in types in Godot.  This provides an English
 # name for the types that corosponds with the type constants defined in the

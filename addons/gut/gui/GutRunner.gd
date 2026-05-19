@@ -18,6 +18,7 @@
 # ##############################################################################
 extends Node2D
 
+const GutUtils = preload("res://addons/gut/utils.gd")
 const EXIT_OK = 0
 const EXIT_ERROR = 1
 

@@ -1,3 +1,5 @@
+const GutUtils = preload("res://addons/gut/utils.gd")
+
 var _strutils = GutUtils.Strutils.new()
 const INDENT = '    '
 var _max_to_display = 30

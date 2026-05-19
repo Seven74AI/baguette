@@ -8,6 +8,8 @@
 #       method2:[ [p1, p2], [p1, p2] ]
 #   },
 # }
+const GutUtils = preload("res://addons/gut/utils.gd")
+
 var _calls = {}
 var _lgr = GutUtils.get_logger()
 var _compare = GutUtils.Comparator.new()

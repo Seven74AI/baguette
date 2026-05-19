@@ -1,9 +1,10 @@
 extends Node
+const GutUtils = preload("res://addons/gut/utils.gd")
+
 
 var Optparse = load('res://addons/gut/cli/optparse.gd')
 var Gut = load('res://addons/gut/gut.gd')
 var GutRunner = load('res://addons/gut/gui/GutRunner.tscn')
-var GutUtils = load('res://addons/gut/utils.gd')
 
 # ------------------------------------------------------------------------------
 # Helper class to resolve the various different places where an option can

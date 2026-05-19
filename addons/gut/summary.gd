@@ -3,6 +3,8 @@
 # work with gut.gd, so I'm fine with that.
 # ------------------------------------------------------------------------------
 # a _test_collector to use when one is not provided.
+const GutUtils = preload("res://addons/gut/utils.gd")
+
 var _gut = null
 
 

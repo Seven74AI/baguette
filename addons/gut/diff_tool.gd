@@ -1,4 +1,6 @@
 extends 'res://addons/gut/compare_result.gd'
+const GutUtils = preload("res://addons/gut/utils.gd")
+
 const INDENT = '    '
 enum {
 	DEEP,

@@ -1,4 +1,6 @@
 
+const GutUtils = preload("res://addons/gut/utils.gd")
+
 var _lgr = GutUtils.get_logger()
 var logger = _lgr :
 	get: return _lgr

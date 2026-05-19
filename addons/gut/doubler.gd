@@ -5,6 +5,8 @@
 # ------------------------------------------------------------------------------
 class PackedSceneDouble:
 	extends PackedScene
+
+	const GutUtils = preload("res://addons/gut/utils.gd")
 	var _script =  null
 	var _scene = null
 
@@ -40,6 +42,7 @@ class PackedSceneDouble:
 # ------------------------------------------------------------------------------
 # START Doubler
 # ------------------------------------------------------------------------------
+const GutUtils = preload("res://addons/gut/utils.gd")
 var _base_script_text = GutUtils.get_file_as_text('res://addons/gut/double_templates/script_template.txt')
 var _script_collector = GutUtils.ScriptCollector.new()
 # used by tests for debugging purposes.

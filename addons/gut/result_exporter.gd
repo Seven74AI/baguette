@@ -4,6 +4,8 @@
 # of a run and exporting it in a specific format.  This can also serve as a
 # unofficial GUT export format.
 # ------------------------------------------------------------------------------
+const GutUtils = preload("res://addons/gut/utils.gd")
+
 var json = JSON.new()
 
 func _export_tests(collected_script):

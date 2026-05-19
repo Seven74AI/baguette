@@ -1,6 +1,8 @@
 # ------------------------------------------------------------------------------
 # Creates an export of a test run in the JUnit XML format.
 # ------------------------------------------------------------------------------
+const GutUtils = preload("res://addons/gut/utils.gd")
+
 var _exporter = GutUtils.ResultExporter.new()
 
 func indent(s, ind):

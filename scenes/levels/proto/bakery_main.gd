@@ -13,6 +13,8 @@ func _ready() -> void:
 	_spawn_player()
 	_spawn_enemies()
 	GameState.start_run()
+	GameState.player_died.connect(_on_player_died)
+	GameState.run_ended.connect(_on_run_ended)
 
 
 func _spawn_player() -> void:
@@ -52,3 +54,12 @@ func _spawn_enemies() -> void:
 		var enemy := enemy_scene.instantiate()
 		add_child(enemy)
 		enemy.global_position = marker.global_position
+
+
+func _on_player_died() -> void:
+	get_tree().change_scene_to_file("res://scenes/ui/game_over.tscn")
+
+
+func _on_run_ended(won: bool) -> void:
+	if won:
+		get_tree().change_scene_to_file("res://scenes/ui/victory.tscn")

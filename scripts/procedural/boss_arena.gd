@@ -313,6 +313,7 @@ func spawn_boss() -> GordonBleu:
 func _on_boss_died() -> void:
 	unlock_doors()
 	boss_defeated.emit()
+	GameState.end_run(true)
 
 
 ## Get the boss reference (null if not spawned yet).

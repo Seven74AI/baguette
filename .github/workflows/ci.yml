@@ -45,7 +45,7 @@ jobs:
             -gdir=res://tests \
             -gjunit_xml_file=res://test-results/junit.xml \
             2>&1 | tee /tmp/gut_output.txt
-          if ! grep -q "Failing tests: 0" /tmp/gut_output.txt; then
+          if ! grep -q "All tests passed!" /tmp/gut_output.txt; then
             echo "::error::GUT tests failed — check output above"
             exit 1
           fi

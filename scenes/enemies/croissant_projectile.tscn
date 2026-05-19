@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://dcroissproj01"]
+
+[ext_resource type="Script" path="res://scenes/enemies/croissant_projectile.gd" id="1_proj_script"]
+
+[sub_resource type="CylinderShape3D" id="proj_shape"]
+radius = 0.2
+height = 0.1
+
+[sub_resource type="CylinderMesh" id="crescent_mesh"]
+top_radius = 0.18
+bottom_radius = 0.12
+height = 0.08
+
+[sub_resource type="StandardMaterial3D" id="crescent_mat"]
+albedo_color = Color(0.92, 0.75, 0.35, 1.0)
+roughness = 0.3
+
+[node name="CroissantProjectile" type="Area3D"]
+script = ExtResource("1_proj_script")
+collision_layer = 4
+collision_mask = 1
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("proj_shape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("crescent_mesh")
+material_override = SubResource("crescent_mat")
+rotation = Vector3(0, 0, 1.57)

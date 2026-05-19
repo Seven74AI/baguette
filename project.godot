@@ -22,6 +22,7 @@ config/icon=""
 GameState="*res://scripts/autoload/game_state.gd"
 EffectsManager="*res://scripts/autoload/effects_manager.gd"
 SoundManager="*res://scripts/autoload/sound_manager.gd"
+MusicManager="*res://scripts/autoload/music_manager.gd"
 GutBootstrap="*res://scripts/autoload/gut_bootstrap.gd"
 
 [display]

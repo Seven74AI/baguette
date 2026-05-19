@@ -5,5 +5,7 @@
 # so that all 31 GUT scripts that reference GutUtils as a class_name can find it.
 extends Node
 
-# Force-compile GutUtils so class_name is globally registered
+# Force-compile GutUtils and GutTest so class_name is globally registered
+# GutTest has the same headless class_name resolution bug as GutUtils
 const _GUT_UTILS = preload("res://addons/gut/utils.gd")
+const _GUT_TEST = preload("res://addons/gut/test.gd")

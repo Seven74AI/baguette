@@ -1,21 +1,103 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="GutTests" failures="0" tests="7" >
-  <testsuite name="tests/unit/test_player_placeholder.gd" tests="4" failures="0" skipped="0" time="0.000754" >
-      <testcase name="test_character_body_3d_can_be_instantiated" assertions="1" status="pass" classname="tests/unit/test_player_placeholder.gd" time="0.00032" >
+<testsuites name="GutTests" failures="0" tests="44" >
+  <testsuite name="tests/integration/test_core_loop.gd" tests="9" failures="0" skipped="0" time="0.351568" >
+      <testcase name="test_level_loads_without_errors" assertions="1" status="pass" classname="tests/integration/test_core_loop.gd" time="0.051245" >
       </testcase>
-      <testcase name="test_character_body_3d_has_collision_layer" assertions="1" status="pass" classname="tests/unit/test_player_placeholder.gd" time="0.000077" >
+      <testcase name="test_player_spawns_in_level" assertions="2" status="pass" classname="tests/integration/test_core_loop.gd" time="0.016017" >
       </testcase>
-      <testcase name="test_character_body_3d_position_defaults_to_origin" assertions="1" status="pass" classname="tests/unit/test_player_placeholder.gd" time="0.000129" >
+      <testcase name="test_weapon_is_attached_to_player" assertions="2" status="pass" classname="tests/integration/test_core_loop.gd" time="0.016179" >
       </testcase>
-      <testcase name="test_character_body_3d_can_be_moved" assertions="3" status="pass" classname="tests/unit/test_player_placeholder.gd" time="0.000228" >
+      <testcase name="test_enemies_spawn_in_level" assertions="1" status="pass" classname="tests/integration/test_core_loop.gd" time="0.0178" >
+      </testcase>
+      <testcase name="test_enemy_has_health_component" assertions="2" status="pass" classname="tests/integration/test_core_loop.gd" time="0.050896" >
+      </testcase>
+      <testcase name="test_weapon_can_damage_enemy" assertions="1" status="pass" classname="tests/integration/test_core_loop.gd" time="0.056734" >
+      </testcase>
+      <testcase name="test_player_has_camera" assertions="1" status="pass" classname="tests/integration/test_core_loop.gd" time="0.049788" >
+      </testcase>
+      <testcase name="test_game_state_run_active_after_level_load" assertions="1" status="pass" classname="tests/integration/test_core_loop.gd" time="0.054525" >
+      </testcase>
+      <testcase name="test_csg_collision_exists" assertions="2" status="pass" classname="tests/integration/test_core_loop.gd" time="0.038384" >
       </testcase>
       </testsuite>
-  <testsuite name="tests/unit/test_project_load.gd" tests="3" failures="0" skipped="0" time="0.000338" >
-      <testcase name="test_project_loads_without_errors" assertions="1" status="pass" classname="tests/unit/test_project_load.gd" time="0.000071" >
+  <testsuite name="tests/unit/test_game_state.gd" tests="6" failures="0" skipped="0" time="0.000974" >
+      <testcase name="test_project_loads_without_errors" assertions="1" status="pass" classname="tests/unit/test_game_state.gd" time="0.000116" >
       </testcase>
-      <testcase name="test_main_scene_is_accessible" assertions="1" status="pass" classname="tests/unit/test_project_load.gd" time="0.000168" >
+      <testcase name="test_game_state_autoload_exists" assertions="2" status="pass" classname="tests/unit/test_game_state.gd" time="0.000249" >
       </testcase>
-      <testcase name="test_gut_framework_is_loaded" assertions="1" status="pass" classname="tests/unit/test_project_load.gd" time="0.000099" >
+      <testcase name="test_game_state_run_lifecycle" assertions="3" status="pass" classname="tests/unit/test_game_state.gd" time="0.000241" >
+      </testcase>
+      <testcase name="test_game_state_damage" assertions="1" status="pass" classname="tests/unit/test_game_state.gd" time="0.000111" >
+      </testcase>
+      <testcase name="test_game_state_death" assertions="2" status="pass" classname="tests/unit/test_game_state.gd" time="0.00015" >
+      </testcase>
+      <testcase name="test_game_state_kills" assertions="1" status="pass" classname="tests/unit/test_game_state.gd" time="0.000107" >
+      </testcase>
+      </testsuite>
+  <testsuite name="tests/unit/test_health_component.gd" tests="13" failures="0" skipped="0" time="0.002146" >
+      <testcase name="test_health_starts_at_max" assertions="2" status="pass" classname="tests/unit/test_health_component.gd" time="0.000147" >
+      </testcase>
+      <testcase name="test_take_damage_reduces_health" assertions="1" status="pass" classname="tests/unit/test_health_component.gd" time="0.000176" >
+      </testcase>
+      <testcase name="test_take_damage_emits_signal" assertions="1" status="pass" classname="tests/unit/test_health_component.gd" time="0.000492" >
+      </testcase>
+      <testcase name="test_health_does_not_go_below_zero" assertions="1" status="pass" classname="tests/unit/test_health_component.gd" time="0.000148" >
+      </testcase>
+      <testcase name="test_health_depleted_signal" assertions="1" status="pass" classname="tests/unit/test_health_component.gd" time="0.000403" >
+      </testcase>
+      <testcase name="test_is_alive_after_damage" assertions="1" status="pass" classname="tests/unit/test_health_component.gd" time="0.000152" >
+      </testcase>
+      <testcase name="test_is_not_alive_after_fatal_damage" assertions="1" status="pass" classname="tests/unit/test_health_component.gd" time="0.000101" >
+      </testcase>
+      <testcase name="test_heal_restores_health" assertions="1" status="pass" classname="tests/unit/test_health_component.gd" time="0.000099" >
+      </testcase>
+      <testcase name="test_heal_does_not_exceed_max" assertions="1" status="pass" classname="tests/unit/test_health_component.gd" time="0.000078" >
+      </testcase>
+      <testcase name="test_heal_does_nothing_when_dead" assertions="1" status="pass" classname="tests/unit/test_health_component.gd" time="0.000072" >
+      </testcase>
+      <testcase name="test_get_health_ratio" assertions="2" status="pass" classname="tests/unit/test_health_component.gd" time="0.000139" >
+      </testcase>
+      <testcase name="test_no_damage_when_dead" assertions="1" status="pass" classname="tests/unit/test_health_component.gd" time="0.000071" >
+      </testcase>
+      <testcase name="test_invulnerability_prevents_damage" assertions="1" status="pass" classname="tests/unit/test_health_component.gd" time="0.000068" >
+      </testcase>
+      </testsuite>
+  <testsuite name="tests/unit/test_player_placeholder.gd" tests="4" failures="0" skipped="0" time="0.000538" >
+      <testcase name="test_character_body_3d_can_be_instantiated" assertions="1" status="pass" classname="tests/unit/test_player_placeholder.gd" time="0.000184" >
+      </testcase>
+      <testcase name="test_character_body_3d_has_collision_layer" assertions="1" status="pass" classname="tests/unit/test_player_placeholder.gd" time="0.000075" >
+      </testcase>
+      <testcase name="test_character_body_3d_position_defaults_to_origin" assertions="1" status="pass" classname="tests/unit/test_player_placeholder.gd" time="0.000116" >
+      </testcase>
+      <testcase name="test_character_body_3d_can_be_moved" assertions="3" status="pass" classname="tests/unit/test_player_placeholder.gd" time="0.000163" >
+      </testcase>
+      </testsuite>
+  <testsuite name="tests/unit/test_project_load.gd" tests="3" failures="0" skipped="0" time="0.000392" >
+      <testcase name="test_project_loads_without_errors" assertions="1" status="pass" classname="tests/unit/test_project_load.gd" time="0.000054" >
+      </testcase>
+      <testcase name="test_main_scene_is_accessible" assertions="1" status="pass" classname="tests/unit/test_project_load.gd" time="0.000184" >
+      </testcase>
+      <testcase name="test_gut_framework_is_loaded" assertions="1" status="pass" classname="tests/unit/test_project_load.gd" time="0.000154" >
+      </testcase>
+      </testsuite>
+  <testsuite name="tests/unit/test_weapon.gd" tests="9" failures="0" skipped="0" time="16.97472" >
+      <testcase name="test_gun_starts_with_full_ammo" assertions="2" status="pass" classname="tests/unit/test_weapon.gd" time="0.020598" >
+      </testcase>
+      <testcase name="test_firing_reduces_ammo" assertions="1" status="pass" classname="tests/unit/test_weapon.gd" time="0.641477" >
+      </testcase>
+      <testcase name="test_firing_emits_fired_signal" assertions="1" status="pass" classname="tests/unit/test_weapon.gd" time="0.634025" >
+      </testcase>
+      <testcase name="test_cannot_fire_while_reloading" assertions="2" status="pass" classname="tests/unit/test_weapon.gd" time="0.647556" >
+      </testcase>
+      <testcase name="test_reload_restores_ammo" assertions="2" status="pass" classname="tests/unit/test_weapon.gd" time="5.65705" >
+      </testcase>
+      <testcase name="test_reloaded_signal" assertions="1" status="pass" classname="tests/unit/test_weapon.gd" time="5.650277" >
+      </testcase>
+      <testcase name="test_ammo_depleted_signal" assertions="1" status="pass" classname="tests/unit/test_weapon.gd" time="3.642356" >
+      </testcase>
+      <testcase name="test_reload_does_nothing_when_full" assertions="2" status="pass" classname="tests/unit/test_weapon.gd" time="0.053841" >
+      </testcase>
+      <testcase name="test_damage_is_correct" assertions="1" status="pass" classname="tests/unit/test_weapon.gd" time="0.02754" >
       </testcase>
       </testsuite>
   </testsuites>

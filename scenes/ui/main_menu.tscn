@@ -42,6 +42,15 @@ layout_mode = 2
 text = "COMMENCER"
 custom_minimum_size = Vector2(300, 60)
 
+[node name="SpacerUpgrade" type="Control" parent="CenterContainer/ContentVBox/VBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 12)
+
+[node name="UpgradeButton" type="Button" parent="CenterContainer/ContentVBox/VBox"]
+layout_mode = 2
+text = "AMÉLIORATIONS"
+custom_minimum_size = Vector2(300, 60)
+
 [node name="Spacer2" type="Control" parent="CenterContainer/ContentVBox/VBox"]
 layout_mode = 2
 custom_minimum_size = Vector2(0, 16)

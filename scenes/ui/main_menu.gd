@@ -3,6 +3,7 @@ extends Control
 ## Bakery-themed dark background with warm glow.
 
 @onready var _start_button: Button = $CenterContainer/ContentVBox/VBox/StartButton
+@onready var _upgrade_button: Button = $CenterContainer/ContentVBox/VBox/UpgradeButton
 @onready var _quit_button: Button = $CenterContainer/ContentVBox/VBox/QuitButton
 @onready var _title_label: Label = $CenterContainer/ContentVBox/TitleLabel
 @onready var _version_label: Label = $CenterContainer/ContentVBox/VersionLabel
@@ -10,6 +11,7 @@ extends Control
 
 func _ready() -> void:
 	_start_button.pressed.connect(_on_start_pressed)
+	_upgrade_button.pressed.connect(_on_upgrade_pressed)
 	_quit_button.pressed.connect(_on_quit_pressed)
 	_apply_bakery_theme()
 
@@ -21,6 +23,10 @@ func _on_start_pressed() -> void:
 
 func _on_quit_pressed() -> void:
 	get_tree().quit()
+
+
+func _on_upgrade_pressed() -> void:
+	get_tree().change_scene_to_file("res://scenes/ui/hub_upgrades.tscn")
 
 
 func _apply_bakery_theme() -> void:
@@ -48,9 +54,12 @@ func _apply_bakery_theme() -> void:
 	btn_style.border_color = Color(0.85, 0.65, 0.13, 1.0)  # Gold border
 
 	_start_button.add_theme_stylebox_override("normal", btn_style)
+	_upgrade_button.add_theme_stylebox_override("normal", btn_style)
 	_quit_button.add_theme_stylebox_override("normal", btn_style)
 
 	_start_button.add_theme_color_override("font_color", Color(1.0, 0.97, 0.88, 1.0))  # Cream text
 	_quit_button.add_theme_color_override("font_color", Color(1.0, 0.97, 0.88, 1.0))
+	_upgrade_button.add_theme_color_override("font_color", Color(1.0, 0.97, 0.88, 1.0))
 	_start_button.add_theme_font_size_override("font_size", 24)
 	_quit_button.add_theme_font_size_override("font_size", 24)
+	_upgrade_button.add_theme_font_size_override("font_size", 24)

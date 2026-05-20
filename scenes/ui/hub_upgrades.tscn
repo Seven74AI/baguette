@@ -1,0 +1,61 @@
+[gd_scene load_steps=3 format=3 uid="uid://hubupgrades01"]
+
+[ext_resource type="Script" path="res://scripts/ui/hub_upgrades.gd" id="1_hub_upgrades_script"]
+
+[node name="HubUpgrades" type="Control"]
+layout_mode = 3
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("1_hub_upgrades_script")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.1, 0.06, 0.03, 1.0)
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="ContentVBox" type="VBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="TitleLabel" type="Label" parent="CenterContainer/ContentVBox"]
+layout_mode = 2
+text = "AMÉLIORATIONS"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Spacer1" type="Control" parent="CenterContainer/ContentVBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 10)
+
+[node name="ReputationLabel" type="Label" parent="CenterContainer/ContentVBox"]
+layout_mode = 2
+text = "RÉPUTATION: 0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Spacer2" type="Control" parent="CenterContainer/ContentVBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 20)
+
+[node name="ScrollContainer" type="ScrollContainer" parent="CenterContainer/ContentVBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 300)
+
+[node name="UpgradesVBox" type="VBoxContainer" parent="CenterContainer/ContentVBox/ScrollContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Spacer3" type="Control" parent="CenterContainer/ContentVBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 20)
+
+[node name="BackButton" type="Button" parent="CenterContainer/ContentVBox"]
+layout_mode = 2
+text = "RETOUR"
+custom_minimum_size = Vector2(300, 60)

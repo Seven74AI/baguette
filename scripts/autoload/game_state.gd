@@ -2,6 +2,8 @@ extends Node
 ## Global game state autoload — tracks player stats, run state, inventory, buffs, and settings.
 ## Persists across scene changes. Proto: lightweight in-memory only.
 
+const ReputationSystem = preload("res://scripts/systems/reputation_system.gd")
+
 class BuffData:
 	var buff_id: String = ""
 	var multiplier: float = 1.0
@@ -18,6 +20,10 @@ signal run_started
 signal run_ended(won: bool)
 signal ammo_changed(current: int, maximum: int)
 signal buffs_changed(buffs: Array)
+
+## PHASE 5.2c: Meta-progression — reputation & upgrades persist across runs.
+var reputation: ReputationSystem
+const META_SAVE_PATH := "user://meta_progression.cfg"
 
 var player_health: int = 100
 var player_max_health: int = 100
@@ -48,10 +54,16 @@ var _upgrade_tokens: int = 0
 
 
 func _ready() -> void:
+	reputation = ReputationSystem.new()
+	reputation.load_from_config(META_SAVE_PATH)
 	_register_all_weapons()
 
 
 func start_run() -> void:
+	# Apply meta-progression upgrades to base stats
+	var mults: Dictionary = reputation.get_upgrade_multipliers()
+	player_max_health = 100 + mults["max_hp_bonus"]
+	_max_ammo = 30 + mults["max_ammo_bonus"]
 	player_health = player_max_health
 	enemies_killed = 0
 	rooms_cleared = 0
@@ -61,6 +73,7 @@ func start_run() -> void:
 	_ammo_count = 0
 	_active_buffs.clear()
 	_upgrade_tokens = 0
+	reputation.reset_run_reputation()
 	run_active = true
 	run_started.emit()
 
@@ -86,17 +99,35 @@ func heal_player(amount: int) -> void:
 
 func record_kill() -> void:
 	enemies_killed += 1
+	reputation.award_kill()
 
 
 func increment_rooms_cleared() -> void:
 	rooms_cleared += 1
+	reputation.award_room_clear()
 
 
 func record_damage_dealt(amount: int) -> void:
 	total_damage_dealt += amount
 
 
+func record_boss_kill() -> void:
+	reputation.award_boss_kill()
+
+
+## Persist meta-progression to ConfigFile.
+func _save_meta_progression() -> void:
+	if reputation:
+		reputation.save_to_config(META_SAVE_PATH)
+
+
 func end_run(won: bool) -> void:
+	# Award run completion bonus
+	reputation.award_run_completion(won)
+	# Finalize run reputation → total
+	reputation.finalize_run()
+	# Persist meta-progression
+	_save_meta_progression()
 	run_active = false
 	run_ended.emit(won)
 
@@ -220,6 +251,9 @@ func _reset_for_testing() -> void:
 	_active_buffs.clear()
 	_upgrade_tokens = 0
 	run_active = false
+	# Reset meta-progression for testing
+	if reputation:
+		reputation = ReputationSystem.new()
 
 ## Record a weapon as used during the run (deduplicated, order-preserving).
 func record_weapon_used(weapon_name: String) -> void:

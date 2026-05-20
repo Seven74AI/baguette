@@ -68,11 +68,11 @@ func _display_stats() -> void:
 
 	_damage_label.text = "DÉGÂTS: " + str(GameState.total_damage_dealt)
 
-	# Display weapons used from GameState
-	if _weapons_label and GameState.has_method("get_weapons_used"):
-		var weapons: Array = GameState.get_weapons_used()
-		if weapons.size() > 0:
-			_weapons_label.text = "ARMES: " + ", ".join(weapons)
+	# PHASE 5.2c: Display reputation earned this run
+	if _weapons_label and GameState.reputation:
+		var run_rep: int = GameState.reputation.get_run_reputation()
+		if run_rep > 0:
+			_weapons_label.text = "RÉPUTATION: " + str(run_rep) + " RP"
 			_weapons_label.visible = true
 		else:
 			_weapons_label.visible = false

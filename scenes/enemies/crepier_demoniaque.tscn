@@ -1,0 +1,38 @@
+[gd_scene load_steps=6 format=3 uid="uid://dcrepierdemoniaque01"]
+
+[ext_resource type="Script" path="res://scripts/enemies/crepier_demoniaque.gd" id="1_script"]
+[ext_resource type="Script" path="res://scripts/components/health_component.gd" id="1_health_script"]
+
+[sub_resource type="CapsuleShape3D" id="capsule_shape"]
+radius = 0.5
+height = 2.0
+
+[sub_resource type="CapsuleMesh" id="capsule_mesh"]
+radius = 0.5
+height = 2.0
+
+[sub_resource type="StandardMaterial3D" id="crepier_mat"]
+albedo_color = Color(0.75, 0.55, 0.35, 1)
+roughness = 0.6
+metallic = 0.1
+
+[node name="CrepierDemoniaque" type="CharacterBody3D" groups=["enemy"]]
+script = ExtResource("1_script")
+collision_layer = 2
+collision_mask = 1
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("capsule_shape")
+position = Vector3(0, 1.0, 0)
+
+[node name="Body" type="MeshInstance3D" parent="."]
+mesh = SubResource("capsule_mesh")
+material_override = SubResource("crepier_mat")
+position = Vector3(0, 1.0, 0)
+
+[node name="HealthComponent" type="Node" parent="."]
+script = ExtResource("1_health_script")
+max_health = 120
+current_health = 120
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]

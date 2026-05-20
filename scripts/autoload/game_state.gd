@@ -203,6 +203,12 @@ func _register_all_weapons() -> void:
 	# Pain au Chocolat Launcher — Phase 4.9
 	register_weapon("pain_au_chocolat_launcher", 60, [3, 1], 3, 2.5)  # FIRE + SLASH
 
+	# Four Sacré (Ultimate) — Phase 5.3b
+	register_weapon("four_sacre", 100, [3], 0, 0)  # FIRE, cooldown-based (no ammo)
+
+	# Pistolet à Encre (DoT) — Phase 5.3b
+	register_weapon("pistolet_encre", 15, [5], 8, 2.0)  # INK, 8 ammo, 2s reload
+
 
 # ── Test helpers ──────────────────────────────────────────────────
 

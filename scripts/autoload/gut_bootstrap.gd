@@ -14,3 +14,5 @@ const _CROISSANT_PROJECTILE = preload("res://scenes/weapons/croissant_projectile
 const _CROISSANT_BOOMERANG = preload("res://scenes/weapons/croissant_boomerang.gd")
 const _WEAPON_MANAGER = preload("res://scripts/weapons/weapon_manager.gd")
 const _CROISSANT_MESH_GEN = preload("res://scenes/weapons/croissant_mesh_generator.gd")
+const _FOUR_SACRE = preload("res://scripts/weapons/four_sacre.gd")
+const _PISTOLET_ENCRE = preload("res://scripts/weapons/pistolet_encre.gd")

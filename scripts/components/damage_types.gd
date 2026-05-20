@@ -15,6 +15,7 @@ const BLUNT: int = 2     # Contondant — gourdins, rouleaux à pâtisserie
 # Elemental damage
 const FIRE: int = 3      # Feu — dégâts de brûlure
 const OVEN: int = 4      # Four — chaleur extrême, ultime
+const INK: int = 5       # Encre — DoT debuff (Mauvaise critique)
 
 # Helper: human-readable names for UI/debug
 const _NAME_MAP: Dictionary = {
@@ -23,6 +24,7 @@ const _NAME_MAP: Dictionary = {
 	BLUNT: "Contondant",
 	FIRE: "Feu",
 	OVEN: "Four",
+	INK: "Encre",
 }
 
 

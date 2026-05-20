@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://dweapfoursacre01"]
+
+[ext_resource type="Script" path="res://scripts/weapons/four_sacre.gd" id="1_four_sacre_script"]
+
+[sub_resource type="CylinderMesh" id="cyl_beam_emitter"]
+top_radius = 0.08
+bottom_radius = 0.12
+height = 0.5
+
+[sub_resource type="StandardMaterial3D" id="mat_golden"]
+albedo_color = Color(1.0, 0.85, 0.3, 1.0)
+emission_enabled = true
+emission = Color(1.0, 0.7, 0.1, 1.0)
+emission_energy_multiplier = 3.0
+roughness = 0.3
+metallic = 0.9
+
+[node name="FourSacre" type="Node3D"]
+script = ExtResource("1_four_sacre_script")
+
+[node name="WeaponModel" type="MeshInstance3D" parent="."]
+mesh = SubResource("cyl_beam_emitter")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0.2)
+visible = true
+surface_material_override/0 = SubResource("mat_golden")
+
+[node name="BeamRayCast" type="RayCast3D" parent="."]
+target_position = Vector3(0, 0, -20)
+collision_mask = 1
+
+[node name="BeamTimer" type="Timer" parent="."]
+one_shot = false
+wait_time = 0.1

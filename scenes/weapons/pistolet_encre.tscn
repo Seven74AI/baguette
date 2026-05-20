@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://dweappistolet01"]
+
+[ext_resource type="Script" path="res://scripts/weapons/pistolet_encre.gd" id="1_pistolet_script"]
+
+[sub_resource type="CylinderMesh" id="cyl_barrel"]
+top_radius = 0.04
+bottom_radius = 0.06
+height = 1.2
+
+[sub_resource type="StandardMaterial3D" id="mat_ink"]
+albedo_color = Color(0.15, 0.08, 0.25, 1.0)
+roughness = 0.4
+metallic = 0.6
+
+[node name="PistoletEncre" type="Node3D"]
+script = ExtResource("1_pistolet_script")
+
+[node name="WeaponModel" type="MeshInstance3D" parent="."]
+mesh = SubResource("cyl_barrel")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.05)
+visible = true
+surface_material_override/0 = SubResource("mat_ink")
+
+[node name="RayCast3D" type="RayCast3D" parent="."]
+target_position = Vector3(0, 0, -100)
+collision_mask = 1
+
+[node name="FireTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="ReloadTimer" type="Timer" parent="."]
+one_shot = true

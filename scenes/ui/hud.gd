@@ -90,6 +90,15 @@ func _process(_delta: float) -> void:
 				_dash_indicator.text = "DASH " + str(ceil(cooldown * 10) / 10.0) + "s"
 				_dash_indicator.add_theme_color_override("font_color", Color(0.5, 0.5, 0.5, 1.0))
 
+	# Mutator display fade-out
+	if _mutator_display_active:
+		_mutator_timer -= _delta
+		if _mutator_timer <= 0.0:
+			_mutator_panel.visible = false
+			_mutator_display_active = false
+		elif _mutator_timer < 0.5:
+			_mutator_panel.modulate.a = _mutator_timer / 0.5
+
 
 func _refresh_weapon_ref() -> void:
 	if not _weapon and _player:

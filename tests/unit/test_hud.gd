@@ -42,3 +42,22 @@ func test_hud_has_dash_indicator() -> void:
 func test_hud_has_kill_counter() -> void:
 	var kill_label: Label = _hud.get_node_or_null("KillPanel/KillLabel")
 	assert_not_null(kill_label, "HUD should have a KillLabel")
+
+
+# ── Mutator display tests (Phase 5.2b fade-out fix) ───────────────
+
+func test_mutator_display_becomes_visible_on_show() -> void:
+	_hud._show_mutator_display("Test Mutator", 1.0)
+	assert_true(_hud._mutator_panel.visible, "Mutator panel should become visible after show call")
+	assert_true(_hud._mutator_display_active, "Mutator display should be active after show call")
+	assert_eq(_hud._mutator_label.text, "Test Mutator", "Label should show the passed text")
+
+
+func test_mutator_display_hides_after_timer_expires() -> void:
+	_hud._show_mutator_display("Fading Mutator", 1.0)
+	assert_true(_hud._mutator_panel.visible, "Panel should start visible")
+	# Simulate 1.1 seconds of _process calls (timer is 1.0)
+	for i in range(22):
+		_hud._process(0.05)
+	assert_false(_hud._mutator_panel.visible, "Panel should be invisible after timer expires")
+	assert_false(_hud._mutator_display_active, "Mutator display should be inactive after timer expires")

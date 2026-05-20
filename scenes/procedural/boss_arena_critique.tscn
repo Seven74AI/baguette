@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://dbossarenacrit0001"]
+
+[ext_resource type="Script" path="res://scripts/procedural/boss_arena.gd" id="1_arena_script"]
+
+[node name="BossArenaCritique" type="Node3D"]
+script = ExtResource("1_arena_script")
+arena_radius = 14.0
+wall_height = 7.0
+wall_segments = 36

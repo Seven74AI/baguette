@@ -92,3 +92,27 @@ func _spawn_one(scene_path: String, pos: Vector3) -> Node:
 	get_parent().add_child(enemy)
 	enemy_spawned.emit(enemy, self)
 	return enemy
+
+
+# ── Phase 5.2a: Zone-based difficulty scaling ─────────────────────
+
+## Returns the current zone's difficulty multiplier for enemy HP scaling.
+func get_zone_difficulty_multiplier() -> float:
+	return ZoneManager.get_difficulty_multiplier()
+
+
+## Returns the current zone's enemy count bonus.
+func get_zone_enemy_count_bonus() -> int:
+	return ZoneManager.get_enemy_count_bonus()
+
+
+## Returns the scaled enemy HP for the current zone by applying the
+## difficulty multiplier to a base HP value.
+func get_scaled_enemy_hp(base_hp: int) -> int:
+	var mult := ZoneManager.get_difficulty_multiplier()
+	return max(1, int(ceil(float(base_hp) * mult)))
+
+
+## Returns the current zone's enemy pool from ZoneManager.
+func get_zone_enemy_pool() -> Array:
+	return ZoneManager.get_enemy_pool()

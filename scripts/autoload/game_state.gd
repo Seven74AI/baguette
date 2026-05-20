@@ -33,6 +33,11 @@ var total_damage_dealt: int = 0
 ## Phase 4.11: Weapons used tracking — list of weapon names used during the run.
 var weapons_used: Array = []
 
+## Phase 5.2a: Multi-zone run tracking.
+var current_zone: int = 0
+## Per-zone progress dictionary: { "zone_0": {"floors": 4}, ... }
+var zone_progress: Dictionary = {}
+
 ## Weapon registry — maps weapon_id (String) to weapon data (Dictionary).
 var weapon_registry: Dictionary = {}
 
@@ -61,7 +66,10 @@ func start_run() -> void:
 	_ammo_count = 0
 	_active_buffs.clear()
 	_upgrade_tokens = 0
+	current_zone = 0
+	zone_progress.clear()
 	run_active = true
+	ZoneManager.reset_to_zone_1()
 	run_started.emit()
 
 
@@ -99,6 +107,22 @@ func record_damage_dealt(amount: int) -> void:
 func end_run(won: bool) -> void:
 	run_active = false
 	run_ended.emit(won)
+
+
+# ── Phase 5.2a: Zone progression ─────────────────────────────────
+
+## Advance to the next zone. Preserves carry-forward state (health, ammo,
+## weapons_used, upgrade_tokens, enemies_killed, rooms_cleared, run_time).
+## Syncs with ZoneManager. Returns the new zone data.
+func advance_zone_state() -> Dictionary:
+	var zone_data := ZoneManager.advance_zone()
+	current_zone = ZoneManager.get_zone_index()
+	return zone_data
+
+
+## Returns true if the player has reached the finale zone (win condition met).
+func is_run_won() -> bool:
+	return ZoneManager.is_finale_zone()
 
 
 # ── Ammo ──────────────────────────────────────────────────────────
@@ -220,6 +244,8 @@ func _reset_for_testing() -> void:
 	_active_buffs.clear()
 	_upgrade_tokens = 0
 	run_active = false
+	current_zone = 0
+	zone_progress.clear()
 
 ## Record a weapon as used during the run (deduplicated, order-preserving).
 func record_weapon_used(weapon_name: String) -> void:

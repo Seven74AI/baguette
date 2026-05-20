@@ -26,6 +26,7 @@ MusicManager="*res://scripts/autoload/music_manager.gd"
 AmbianceManager="*res://scripts/autoload/ambiance_manager.gd"
 GutBootstrap="*res://scripts/autoload/gut_bootstrap.gd"
 Palette="*res://scripts/autoload/palette.gd"
+ZoneManager="*res://scripts/systems/zone_manager.gd"
 
 [display]
 

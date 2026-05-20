@@ -20,6 +20,9 @@ const COLOR_GREEN := Color(0.2, 0.7, 0.2, 1.0)
 @onready var _crosshair_left: Label = $Crosshair/Left
 @onready var _crosshair_right: Label = $Crosshair/Right
 @onready var _crosshair_center: Label = $Crosshair/Center
+## Phase 5.2b: Mutator display
+@onready var _mutator_panel: Panel = $MutatorPanel
+@onready var _mutator_label: Label = $MutatorPanel/MutatorLabel
 
 var _player: CharacterBody3D = null
 var _weapon: Node = null
@@ -32,6 +35,10 @@ func _ready() -> void:
 	
 	_refresh_weapon_ref()
 	_apply_bakery_theme()
+	
+	# Phase 5.2b: Listen for floor mutator changes
+	if not GameState.floor_mutator_changed.is_connected(_on_floor_mutator_changed):
+		GameState.floor_mutator_changed.connect(_on_floor_mutator_changed)
 
 
 func _process(_delta: float) -> void:
@@ -153,3 +160,30 @@ func _apply_bakery_theme() -> void:
 	dash_style.corner_radius_bottom_left = 4
 	dash_style.corner_radius_bottom_right = 4
 	_dash_indicator.get_parent().add_theme_stylebox_override("panel", dash_style)
+# ── Floor Mutator Display (Phase 5.2b) ──────────────────────────
+
+var _mutator_timer: float = 0.0
+var _mutator_display_active: bool = false
+
+
+func _on_floor_mutator_changed(mutator: Dictionary) -> void:
+	# Show the mutator panel with name, icon, and description
+	if _mutator_panel and _mutator_label:
+		var icon: String = mutator.get("icon", "")
+		var name: String = mutator.get("name", "???")
+		var desc: String = mutator.get("description", "")
+		_mutator_label.text = icon + " " + name + " — " + desc
+		_mutator_panel.visible = true
+		_mutator_panel.modulate.a = 1.0
+		_mutator_timer = 3.0
+		_mutator_display_active = true
+
+
+## Called by the test harness to manually show mutator display.
+func _show_mutator_display(p_text: String, p_duration: float = 3.0) -> void:
+	if _mutator_panel and _mutator_label:
+		_mutator_label.text = p_text
+		_mutator_panel.visible = true
+		_mutator_panel.modulate.a = 1.0
+		_mutator_timer = p_duration
+		_mutator_display_active = true

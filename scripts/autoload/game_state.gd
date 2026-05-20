@@ -18,6 +18,9 @@ signal run_started
 signal run_ended(won: bool)
 signal ammo_changed(current: int, maximum: int)
 signal buffs_changed(buffs: Array)
+signal floor_mutator_changed(mutator: Dictionary)
+
+const MutatorSystem = preload("res://scripts/systems/mutator_system.gd")
 
 var player_health: int = 100
 var player_max_health: int = 100
@@ -45,6 +48,11 @@ var _active_buffs: Array = []
 
 ## Weapon upgrade tokens.
 var _upgrade_tokens: int = 0
+
+## Phase 5.2b: Floor mutator state.
+var _mutator_system: MutatorSystem = null
+var active_mutator: Dictionary = {}
+var active_mutator_name: String = ""
 
 
 func _ready() -> void:
@@ -204,6 +212,37 @@ func _register_all_weapons() -> void:
 	register_weapon("pain_au_chocolat_launcher", 60, [3, 1], 3, 2.5)  # FIRE + SLASH
 
 
+# ── Floor Mutator (Phase 5.2b) ────────────────────────────────────
+
+## Apply a floor mutator — stores it and broadcasts to all listeners.
+func apply_floor_mutator(p_mutator: Dictionary) -> void:
+	active_mutator = p_mutator
+	active_mutator_name = p_mutator.get("name", "")
+	floor_mutator_changed.emit(p_mutator)
+
+
+## Get the currently active floor mutator effects (for other systems to query).
+func get_mutator_effects() -> Dictionary:
+	return active_mutator.get("effects", {})
+
+
+## Check if a specific mutator effect is active.
+func has_mutator_effect(p_effect_key: String) -> bool:
+	return active_mutator.get("effects", {}).has(p_effect_key)
+
+
+## Get a specific mutator effect value, or default if not active.
+func get_mutator_effect(p_effect_key: String, p_default: float = 1.0) -> float:
+	var effects: Dictionary = active_mutator.get("effects", {})
+	return effects.get(p_effect_key, p_default)
+
+
+## Clear the current floor mutator (between zones).
+func clear_floor_mutator() -> void:
+	active_mutator = {}
+	active_mutator_name = ""
+
+
 # ── Test helpers ──────────────────────────────────────────────────
 
 ## Reset all state for unit testing.
@@ -220,6 +259,8 @@ func _reset_for_testing() -> void:
 	_active_buffs.clear()
 	_upgrade_tokens = 0
 	run_active = false
+	active_mutator = {}
+	active_mutator_name = ""
 
 ## Record a weapon as used during the run (deduplicated, order-preserving).
 func record_weapon_used(weapon_name: String) -> void:
